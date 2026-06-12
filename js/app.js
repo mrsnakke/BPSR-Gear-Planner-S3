@@ -243,7 +243,7 @@ window.renderPlanner = function() {
         
         const rareOpts = rareStatsData[activeBuild][gear.id] || [];
         const rareOptionsHTML = rareOpts.map(opt => `<option value="${opt}" ${state.rare === opt ? 'selected' : ''}>${opt}</option>`).join('');
-        const levelOptions = ['Lv220', 'Lv240', 'Lv260'].map(lvl => `<option value="${lvl}" ${state.level === lvl ? 'selected' : ''}>${lvl}</option>`).join('');
+        const levelOptions = ['Lv220', 'Lv240', 'Lv260'].map(lvl => `<option value="${lvl}" ${state.level === lvl ? 'selected' : ''} class="level-selector-option">${lvl}</option>`).join('');
 
         const currentSigil = sigilData[state.sigil] || sigilData['none'];
         const sigilOverlayHTML = state.sigil !== 'none' && currentSigil.image ? `
@@ -259,13 +259,10 @@ window.renderPlanner = function() {
                         ${isBiS ? `<span class="px-1.5 py-0.5 text-[10px] font-extrabold bg-gameGold text-black rounded uppercase animate-pulse shadow-gold-glow">BiS</span>` : ''}
                     </div>
                     <div class="flex items-center gap-3">
-                        <select onchange="updateLevel('${gear.id}', this.value)" class="bg-transparent text-gray-400 text-xs font-mono focus:outline-none cursor-pointer hover:text-white">${levelOptions}</select>
-                        <div class="flex gap-1 group relative">
-                            <div class="w-3 h-3 rounded-full ${state.bgColor === 'dorado' ? 'bg-gameGold' : 'bg-gameOrange'} cursor-pointer"></div>
-                            <div class="absolute right-0 top-4 hidden group-hover:flex bg-gray-900 border border-gray-700 p-1 rounded gap-1 z-10 shadow-lg">
-                                <button onclick="updateBgColor('${gear.id}', 'naranja-rojo')" class="w-4 h-4 rounded-full bg-gameOrange border hover:scale-110 ${state.bgColor === 'naranja-rojo' ? 'border-white' : 'border-transparent'}"></button>
-                                <button onclick="updateBgColor('${gear.id}', 'dorado')" class="w-4 h-4 rounded-full bg-gameGold border hover:scale-110 ${state.bgColor === 'dorado' ? 'border-white' : 'border-transparent'}"></button>
-                            </div>
+                        <select onchange="updateLevel('${gear.id}', this.value)" class="bg-transparent text-gray-400 text-xs font-mono focus:outline-none cursor-pointer hover:text-white level-selector">${levelOptions}</select>
+                        <div class="flex gap-1 color-toggle-container" data-gear-id="${gear.id}">
+                            <button class="w-4 h-4 rounded-full bg-gameOrange border hover:scale-110 ${state.bgColor === 'naranja-rojo' ? 'border-white' : 'border-transparent'} color-toggle-button" data-color="naranja-rojo"></button>
+                            <button class="w-4 h-4 rounded-full bg-gameGold border hover:scale-110 ${state.bgColor === 'dorado' ? 'border-white' : 'border-transparent'} color-toggle-button" data-color="dorado"></button>
                         </div>
                     </div>
                 </div>
@@ -349,6 +346,30 @@ window.renderPlanner = function() {
     });
 
     updateGlobalStats();
+
+    // Manejo de la visibilidad de los selectores de nivel
+    document.querySelectorAll(".level-selector").forEach(selector => {
+        const options = Array.from(selector.options);
+        const selectedOption = options.find(option => option.selected);
+        const hasSelected = selectedOption !== undefined;
+        if (hasSelected) {
+            selector.style.width = `${selectedOption.textContent.length * 8 + 20}px`; // Ajustar ancho basado en el texto seleccionado
+        } else {
+            selector.style.width = 'auto';
+        }
+    });
+
+    // Manejo del selector de color
+    document.querySelectorAll(".color-toggle-container").forEach(container => {
+        container.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.classList.contains('color-toggle-button')) {
+                const gearId = container.dataset.gearId;
+                const color = target.dataset.color;
+                window.updateBgColor(gearId, color);
+            }
+        });
+    });
 };
 
 // ====== INICIALIZAR ======

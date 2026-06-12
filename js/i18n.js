@@ -81,15 +81,15 @@ const translations = {
         // Gear Pieces
         gear_weapon: "Weapon",
         gear_head: "Helmet",
-        gear_armor: "Chest",
-        gear_guante: "Gloves",
+        gear_armor: "Armor",
+        gear_guante: "Gauntlets",
         gear_bota: "Boots",
         gear_arete: "Earring",
         gear_collar: "Necklace",
         gear_anillo: "Ring",
         gear_brazaleteL: "Bracelet L",
         gear_brazaleteR: "Bracelet R",
-        gear_amuleto: "Amulet",
+        gear_amuleto: "Charm",
 
         // Sigils
         sigil_none: "No Sigil",
