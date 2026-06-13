@@ -1,0 +1,368 @@
+[
+  {
+    "name": "Cabbage Killer Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Cabbage Killer Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Wasteland Foxen Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Wasteland Foxen Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Cabbage Tough Guy Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Cabbage Tough Guy Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Glimmer Caprahorn Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Glimmer Caprahorn Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Cabbage Blaster Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Cabbage Blaster Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Nether Caprahorn Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Nether Caprahorn Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Cabbage Hunter Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Cabbage Hunter Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Foxen Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Foxen Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Frost Lizard Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Frost Lizard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Magma Lizard Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Magma Lizard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Gale Lizard Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Gale Lizard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Lightning Lizard Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Lightning Lizard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Marksman Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Blackstone Marksman Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Guard Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Blackstone Guard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Warrior Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Blackstone Warrior Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Assaulter Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Blackstone Assaulter Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Warrior Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Goblin Warrior Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Axeman Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Goblin Axeman Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Priest Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Goblin Priest Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Sentry Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Goblin Sentry Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Bluespine Lizard Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Bluespine Lizard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Emerald Caprahorn Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Emerald Caprahorn Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Commander Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Blackstone Commander Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackfire Foxen Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Blackfire Foxen Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Gloomy Cabbage Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Gloomy Cabbage Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Vanguard Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Blackstone Vanguard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Ruthless Cabbage Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Ruthless Cabbage Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Trickster Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Goblin Trickster Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Shaman Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Goblin Shaman Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Basilisk Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Basilisk Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Goblin Chief Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Goblin Chief Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Crimson Foxen Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Crimson Foxen Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Cabbage Kingpin Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Cabbage Kingpin Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Blackstone Captain Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Blackstone Captain Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Flamehorn Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Flamehorn Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Caprahorn - Bloom & Steel Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Caprahorn - Bloom & Steel Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Withered Bloomshard Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Withered Bloomshard Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Erosion Bloom Afterimage Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Erosion Bloom Afterimage Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Infernal Arachnocrab Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Infernal Arachnocrab Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Wasteland Arachnocrab Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Wasteland Arachnocrab Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Sandstone Yeti Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Sandstone Yeti Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Ashen Yeti Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Ashen Yeti Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Wild Mountain Boar Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Wild Mountain Boar Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Hunter Mountain Boar Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Hunter Mountain Boar Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Gnashing Furball Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Gnashing Furball Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Spiky Furball Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Spiky Furball Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Patrolling Oculoid Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Patrolling Oculoid Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Mechcore Oculoid Sigil",
+    "quality": "Rare",
+    "image": "source/sigil/Mechcore Oculoid Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Killer Arachnocrab Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Killer Arachnocrab Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Dogorman Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Dogorman Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Verdant Fang Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Verdant Fang Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Man-Eating Furball Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Man-Eating Furball Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Sanctuary Eye Sigil",
+    "quality": "Epic",
+    "image": "source/sigil/Sanctuary Eye Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Predator Arachnocrab Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Predator Arachnocrab Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Rebel King Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Rebel King Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Ridge Fang Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Ridge Fang Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Bloodthirsty Furball Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Bloodthirsty Furball Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Void Watcher Sigil",
+    "quality": "Legendary",
+    "image": "source/sigil/Void Watcher Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Paradox-Calamity Remnant - Origin Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Paradox-Calamity Remnant - Origin Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Paradox-Calamity Remnant - Continuation Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Paradox-Calamity Remnant - Continuation Sigil.webp",
+    "stat": ""
+  },
+  {
+    "name": "Paradox-Calamity Remnant - Final Sigil",
+    "quality": "Mythic",
+    "image": "source/sigil/Paradox-Calamity Remnant - Final Sigil.webp",
+    "stat": ""
+  }
+]
