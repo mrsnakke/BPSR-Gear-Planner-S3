@@ -41,7 +41,39 @@ window.toggleRaid = function(id, isRaid) { plannerState[id].raid = isRaid; saveA
 window.toggleStatCheck = function(id, field, val) { plannerState[id][field] = val; saveAndRefresh(); };
 window.updateLevel = function(id, val) { plannerState[id].level = val; saveAndRefresh(); };
 window.updateBgColor = function(id, color) { plannerState[id].bgColor = color; saveAndRefresh(); };
-window.updateStat = function(id, type, val) { plannerState[id][type] = val; saveAndRefresh(); };
+window.updateStat = function(id, type, val) {
+    const state = plannerState[id];
+    if (!state) return;
+    if (type === 'primary') {
+        if (val && state.secondary === val) {
+            state.secondary = state.primary;
+        }
+        state.primary = val;
+    } else if (type === 'secondary') {
+        if (val && state.primary === val) {
+            state.primary = state.secondary;
+        }
+        state.secondary = val;
+    } else {
+        state[type] = val;
+    }
+    saveAndRefresh();
+};
+
+window.swapStats = function(id) {
+    const state = plannerState[id];
+    if (!state) return;
+    const tempPrimary = state.primary;
+    const tempPrimaryChecked = state.primaryChecked;
+    
+    state.primary = state.secondary;
+    state.primaryChecked = state.secondaryChecked;
+    
+    state.secondary = tempPrimary;
+    state.secondaryChecked = tempPrimaryChecked;
+    
+    saveAndRefresh();
+};
 window.updateSigil = function(id, val) { plannerState[id].sigil = val; saveAndRefresh(); };
 
 window.resetPlanner = function() {
@@ -62,9 +94,8 @@ function validateGearStats(gearId) {
     const allStats = ['versatilidad', 'maestria', 'presteza', 'critico', 'suerte'];
     const allowedStats = allStats.filter(s => !banned.includes(s));
     
-    if (!allowedStats.includes(state.primary)) state.primary = allowedStats[0] || '';
-    const allowedSecondary = allowedStats.filter(s => s !== state.primary);
-    if (!allowedSecondary.includes(state.secondary)) state.secondary = allowedSecondary[0] || '';
+    if (state.primary && !allowedStats.includes(state.primary)) state.primary = '';
+    if (state.secondary && !allowedStats.includes(state.secondary)) state.secondary = '';
 
     const rareOpts = rareStatsData[build][gearId] || [];
     if (!rareOpts.includes(state.rare)) state.rare = rareOpts[0] || '';
@@ -91,7 +122,7 @@ window.renderPlanner = function() {
 
     gearData.forEach(gear => {
         if (!plannerState[gear.id]) {
-            plannerState[gear.id] = { obtained: false, primary: 'maestria', primaryChecked: false, secondary: 'suerte', secondaryChecked: false, rare: '', rareChecked: false, level: 'Lv220', bgColor: 'dorado', sigil: 'none', raid: false };
+            plannerState[gear.id] = { obtained: false, primary: '', primaryChecked: false, secondary: '', secondaryChecked: false, rare: '', rareChecked: false, level: 'Lv220', bgColor: 'dorado', sigil: 'none', raid: false };
         }
         validateGearStats(gear.id);
     });
@@ -298,6 +329,14 @@ window.renderPlanner = function() {
                                 </label>
                             </div>
                             <select onchange="updateStat('${gear.id}', 'primary', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.primaryChecked ? 'text-white' : 'text-gray-400'} text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-gameOrange cursor-pointer">${primOptions}</select>
+                        </div>
+
+                        <div class="flex justify-center -my-1.5">
+                            <button onclick="swapStats('${gear.id}')" title="${t('ui_swap')}" class="z-10 bg-gray-950 border border-gray-800 text-gray-400 hover:text-gameGold hover:border-gameGold/50 p-1 rounded-full transition-all duration-200 transform hover:scale-110 flex items-center justify-center w-6 h-6 shadow-md">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 16V4m0 0L3 8m4-4l4 4m10 0v12m0 0l-4-4m4 4l4-4" />
+                                </svg>
+                            </button>
                         </div>
 
                         <div class="p-2 rounded-xl border ${state.secondaryChecked ? 'ring-1 ring-gameGold/50 bg-gameGold/10 border-gameGold/30' : 'border-gray-800 bg-gray-900/50'}">

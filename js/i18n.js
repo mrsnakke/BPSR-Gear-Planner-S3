@@ -21,6 +21,8 @@ const translations = {
         ui_secondary: "Secundario",
         ui_rare: "Raro",
         ui_bonus: "Bonus:",
+        ui_swap: "Intercambiar atributos",
+        stat_empty: "— Seleccionar —",
         
         // Atributos Base
         stat_versatilidad: "Versatilidad",
@@ -70,6 +72,8 @@ const translations = {
         ui_secondary: "Secondary",
         ui_rare: "Rare",
         ui_bonus: "Bonus:",
+        ui_swap: "Swap attributes",
+        stat_empty: "— Select —",
 
         // Base Stats
         stat_versatilidad: "Versatility",
