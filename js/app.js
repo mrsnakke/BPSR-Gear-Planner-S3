@@ -97,6 +97,66 @@ window.resetPlanner = function() {
 };
 
 // ====== LÓGICA DE VALIDACIÓN ======
+function isSigilAllowedForGear(sigilId, gearId) {
+    if (sigilId === 'none') return true;
+
+    // Grupo de Armadura (Casco, Pechera, Guante y Bota)
+    const armorSlots = ['head', 'armor', 'guante', 'bota'];
+    const armorSigils = [
+        'blackstoneCaptain', 'bloodthirstyFurball', 'cabbageBlaster', 'cabbageKiller',
+        'cabbageKingpin', 'cabbageToughGuy', 'crimsonFoxen', 'flamehorn',
+        'glimmerCaprahorn', 'gnashingFurball', 'goblinChief', 'hunterMountainBoar',
+        'mechcoreOculoid', 'patrollingOculoid', 'rebelKing', 'ridgeFang',
+        'spikyFurball', 'voidWatcher', 'wastelandFoxen'
+    ];
+
+    // Grupo de Accesorios y Arma (Arma, Aretes, Collar, Anillo)
+    const weaponAndJewelrySlots = ['weapon', 'arete', 'collar', 'anillo'];
+    const sharedWeaponJewelrySigils = [
+        'blackfireFoxen', 'blackstoneCommander', 'caprahornBloomSteel', 'emeraldCaprahorn',
+        'erosionBloomAfterimage', 'infernalArachnocrab', 'paradoxCalamityRemnantContinuation',
+        'paradoxCalamityRemnantFinal', 'paradoxCalamityRemnantOrigin', 'predatorArachnocrab',
+        'wastelandArachnocrab', 'witheredBloomshard'
+    ];
+    const exclusiveWeaponSigils = ['basilisk', 'bluespineLizard', 'killerArachnocrab'];
+    const exclusiveJewelrySigils = ['cabbageHunter', 'foxen', 'netherCaprahorn'];
+
+    // Grupo de Brazaletes y Amuleto (Brazalete L, Brazalete R, Amuleto)
+    const braceletAmuletoSlots = ['brazaleteL', 'brazaleteR', 'amuleto'];
+    const sharedBraceletAmuletoSigils = [
+        'ashenYeti', 'blackstoneAssaulter', 'blackstoneGuard', 'blackstoneMarksman',
+        'blackstoneVanguard', 'blackstoneWarrior', 'dogorman', 'galeLizard',
+        'gloomyCabbage', 'goblinAxeman', 'goblinPriest', 'goblinSentry',
+        'goblinShaman', 'goblinTrickster', 'goblinWarrior', 'lightningLizard',
+        'magmaLizard', 'manEatingFurball', 'ruthlessCabbage', 'sanctuaryEye',
+        'sandstoneYeti', 'verdantFang', 'wildMountainBoar'
+    ];
+    const exclusiveBraceletSigils = ['frostLizard'];
+
+    if (armorSlots.includes(gearId)) {
+        return armorSigils.includes(sigilId);
+    }
+
+    if (weaponAndJewelrySlots.includes(gearId)) {
+        if (sharedWeaponJewelrySigils.includes(sigilId)) return true;
+        if (gearId === 'weapon') {
+            return exclusiveWeaponSigils.includes(sigilId);
+        } else {
+            return exclusiveJewelrySigils.includes(sigilId);
+        }
+    }
+
+    if (braceletAmuletoSlots.includes(gearId)) {
+        if (sharedBraceletAmuletoSigils.includes(sigilId)) return true;
+        if (gearId === 'brazaleteL' || gearId === 'brazaleteR') {
+            return exclusiveBraceletSigils.includes(sigilId);
+        }
+        return false;
+    }
+
+    return false;
+}
+
 function validateGearStats(gearId) {
     const state = plannerState[gearId];
     if (!state) return;
@@ -111,6 +171,10 @@ function validateGearStats(gearId) {
 
     const rareOpts = rareStatsData[build][gearId] || [];
     if (!rareOpts.includes(state.rare)) state.rare = rareOpts[0] || '';
+
+    if (state.sigil && state.sigil !== 'none' && !isSigilAllowedForGear(state.sigil, gearId)) {
+        state.sigil = 'none';
+    }
 }
 
 function updateGlobalStats() {
@@ -296,7 +360,8 @@ window.renderPlanner = function() {
             </div>
         `;
         
-        dropdownItemsHTML += sigilData.map(sigil => {
+        const filteredSigils = sigilData.filter(sigil => isSigilAllowedForGear(sigil.id, gear.id));
+        dropdownItemsHTML += filteredSigils.map(sigil => {
             const color = qualityColors[sigil.quality] || '#ffffff';
             return `
                 <div onclick="updateSigil('${gear.id}', '${sigil.id}')" class="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800/80 cursor-pointer text-xs font-bold select-none" style="color: ${color};">
