@@ -3,366 +3,402 @@
     "name": "Cabbage Killer Sigil",
     "quality": "Rare",
     "image": "source/sigil/Cabbage Killer Sigil.webp",
-    "stat": ""
+    "stat": "Crit 200"
   },
   {
     "name": "Wasteland Foxen Sigil",
     "quality": "Rare",
     "image": "source/sigil/Wasteland Foxen Sigil.webp",
-    "stat": ""
+    "stat": "Haste +200"
   },
   {
     "name": "Cabbage Tough Guy Sigil",
     "quality": "Rare",
     "image": "source/sigil/Cabbage Tough Guy Sigil.webp",
-    "stat": ""
+    "stat": "Luck +200"
   },
   {
     "name": "Glimmer Caprahorn Sigil",
     "quality": "Rare",
     "image": "source/sigil/Glimmer Caprahorn Sigil.webp",
-    "stat": ""
+    "stat": "Mastery +200"
   },
   {
     "name": "Cabbage Blaster Sigil",
     "quality": "Rare",
     "image": "source/sigil/Cabbage Blaster Sigil.webp",
-    "stat": ""
+    "stat": "Versatility +200"
   },
   {
     "name": "Nether Caprahorn Sigil",
     "quality": "Rare",
     "image": "source/sigil/Nether Caprahorn Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +50",
+    "stat2": "Strength +15"
   },
   {
     "name": "Cabbage Hunter Sigil",
     "quality": "Rare",
     "image": "source/sigil/Cabbage Hunter Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +50",
+    "stat2": "Intellect +15"
   },
   {
     "name": "Foxen Sigil",
     "quality": "Rare",
     "image": "source/sigil/Foxen Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +50",
+    "stat2": "Agility +15"
   },
   {
     "name": "Frost Lizard Sigil",
     "quality": "Rare",
     "image": "source/sigil/Frost Lizard Sigil.webp",
-    "stat": ""
+    "stat": "Strength +12",
+    "stat2": "Crit +140"
   },
   {
     "name": "Magma Lizard Sigil",
     "quality": "Rare",
     "image": "source/sigil/Magma Lizard Sigil.webp",
-    "stat": ""
+    "stat": "Strength +12",
+    "stat2": "Haste +140"
   },
   {
     "name": "Gale Lizard Sigil",
     "quality": "Rare",
     "image": "source/sigil/Gale Lizard Sigil.webp",
-    "stat": ""
+    "stat": "Strength +12",
+    "stat2": "Luck +140"
   },
   {
     "name": "Lightning Lizard Sigil",
     "quality": "Rare",
     "image": "source/sigil/Lightning Lizard Sigil.webp",
-    "stat": ""
+    "stat": "Strength +12",
+    "stat2": "Mastery +140"
   },
   {
     "name": "Blackstone Marksman Sigil",
     "quality": "Rare",
     "image": "source/sigil/Blackstone Marksman Sigil.webp",
-    "stat": ""
+    "stat": "Intellect +12",
+    "stat2": "Crit +140"
   },
   {
     "name": "Blackstone Guard Sigil",
     "quality": "Rare",
     "image": "source/sigil/Blackstone Guard Sigil.webp",
-    "stat": ""
+    "stat": "Intellect +12",
+    "stat2": "Haste +140"
   },
   {
     "name": "Blackstone Warrior Sigil",
     "quality": "Rare",
     "image": "source/sigil/Blackstone Warrior Sigil.webp",
-    "stat": ""
+    "stat": "Intellect +12",
+    "stat2": "Luck +140"
   },
   {
     "name": "Blackstone Assaulter Sigil",
     "quality": "Rare",
     "image": "source/sigil/Blackstone Assaulter Sigil.webp",
-    "stat": ""
+    "stat": "Intellect +12",
+    "stat2": "Mastery +140"
   },
   {
     "name": "Goblin Warrior Sigil",
     "quality": "Rare",
     "image": "source/sigil/Goblin Warrior Sigil.webp",
-    "stat": ""
+    "stat": "Agility +12",
+    "stat2": "Crit +140"
   },
   {
     "name": "Goblin Axeman Sigil",
     "quality": "Rare",
     "image": "source/sigil/Goblin Axeman Sigil.webp",
-    "stat": ""
+    "stat": "Agility +12",
+    "stat2": "Haste +140"
   },
   {
     "name": "Goblin Priest Sigil",
     "quality": "Rare",
     "image": "source/sigil/Goblin Priest Sigil.webp",
-    "stat": ""
+    "stat": "Agility +12",
+    "stat2": "Luck +140"
   },
   {
     "name": "Goblin Sentry Sigil",
     "quality": "Rare",
     "image": "source/sigil/Goblin Sentry Sigil.webp",
-    "stat": ""
+    "stat": "Agility +12",
+    "stat2": "Mastery +140"
   },
   {
     "name": "Bluespine Lizard Sigil",
     "quality": "Epic",
     "image": "source/sigil/Bluespine Lizard Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +20"
   },
   {
     "name": "Emerald Caprahorn Sigil",
     "quality": "Epic",
     "image": "source/sigil/Emerald Caprahorn Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +80",
+    "stat2": "Strength +25"
   },
   {
     "name": "Blackstone Commander Sigil",
     "quality": "Epic",
     "image": "source/sigil/Blackstone Commander Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +80",
+    "stat2": "Intellect +25"
   },
   {
     "name": "Blackfire Foxen Sigil",
     "quality": "Epic",
     "image": "source/sigil/Blackfire Foxen Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +80",
+    "stat2": "Agility +25"
   },
   {
     "name": "Gloomy Cabbage Sigil",
     "quality": "Epic",
     "image": "source/sigil/Gloomy Cabbage Sigil.webp",
-    "stat": ""
+    "stat": "Crit 300"
   },
   {
     "name": "Blackstone Vanguard Sigil",
     "quality": "Epic",
     "image": "source/sigil/Blackstone Vanguard Sigil.webp",
-    "stat": ""
+    "stat": "Haste +300"
   },
   {
     "name": "Ruthless Cabbage Sigil",
     "quality": "Epic",
     "image": "source/sigil/Ruthless Cabbage Sigil.webp",
-    "stat": ""
+    "stat": "Luck +300"
   },
   {
     "name": "Goblin Trickster Sigil",
     "quality": "Epic",
     "image": "source/sigil/Goblin Trickster Sigil.webp",
-    "stat": ""
+    "stat": "Mastery +300"
   },
   {
     "name": "Goblin Shaman Sigil",
     "quality": "Epic",
     "image": "source/sigil/Goblin Shaman Sigil.webp",
-    "stat": ""
+    "stat": "Versatility +300"
   },
   {
     "name": "Basilisk Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Basilisk Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +40"
   },
   {
     "name": "Goblin Chief Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Goblin Chief Sigil.webp",
-    "stat": ""
+    "stat": "Crit 500"
   },
   {
     "name": "Crimson Foxen Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Crimson Foxen Sigil.webp",
-    "stat": ""
+    "stat": "Haste +500"
   },
   {
     "name": "Cabbage Kingpin Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Cabbage Kingpin Sigil.webp",
-    "stat": ""
+    "stat": "Luck +500"
   },
   {
     "name": "Blackstone Captain Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Blackstone Captain Sigil.webp",
-    "stat": ""
+    "stat": "Mastery +500"
   },
   {
     "name": "Flamehorn Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Flamehorn Sigil.webp",
-    "stat": ""
+    "stat": "Versatility +500"
   },
   {
     "name": "Caprahorn - Bloom & Steel Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Caprahorn - Bloom & Steel Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +40",
+    "stat2": "Strength +50"
   },
   {
     "name": "Withered Bloomshard Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Withered Bloomshard Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +40",
+    "stat2": "Intellect +50"
   },
   {
     "name": "Erosion Bloom Afterimage Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Erosion Bloom Afterimage Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +40",
+    "stat2": "Agility +50"
   },
   {
     "name": "Infernal Arachnocrab Sigil",
     "quality": "Rare",
     "image": "source/sigil/Infernal Arachnocrab Sigil.webp",
-    "stat": ""
+    "stat": "ATK +38"
   },
   {
     "name": "Wasteland Arachnocrab Sigil",
     "quality": "Rare",
     "image": "source/sigil/Wasteland Arachnocrab Sigil.webp",
-    "stat": ""
+    "stat": "MATK +38"
   },
   {
     "name": "Sandstone Yeti Sigil",
     "quality": "Rare",
     "image": "source/sigil/Sandstone Yeti Sigil.webp",
-    "stat": ""
+    "stat": "Strength +60",
+    "stat2": "Endurance +195"
   },
   {
     "name": "Ashen Yeti Sigil",
     "quality": "Rare",
     "image": "source/sigil/Ashen Yeti Sigil.webp",
-    "stat": ""
+    "stat": "Intellect +60",
+    "stat2": "Endurance +195"
   },
   {
     "name": "Wild Mountain Boar Sigil",
     "quality": "Rare",
     "image": "source/sigil/Wild Mountain Boar Sigil.webp",
-    "stat": ""
+    "stat": "Agility +60",
+    "stat2": "Endurance +195"
   },
   {
     "name": "Hunter Mountain Boar Sigil",
     "quality": "Rare",
     "image": "source/sigil/Hunter Mountain Boar Sigil.webp",
-    "stat": ""
+    "stat": "Crit +620"
   },
   {
     "name": "Gnashing Furball Sigil",
     "quality": "Rare",
     "image": "source/sigil/Gnashing Furball Sigil.webp",
-    "stat": ""
+    "stat": "Haste +620"
   },
   {
     "name": "Spiky Furball Sigil",
     "quality": "Rare",
     "image": "source/sigil/Spiky Furball Sigil.webp",
-    "stat": ""
+    "stat": "Luck +620"
   },
   {
     "name": "Patrolling Oculoid Sigil",
     "quality": "Rare",
     "image": "source/sigil/Patrolling Oculoid Sigil.webp",
-    "stat": ""
+    "stat": "Mastery +620"
   },
   {
     "name": "Mechcore Oculoid Sigil",
     "quality": "Rare",
     "image": "source/sigil/Mechcore Oculoid Sigil.webp",
-    "stat": ""
+    "stat": "Versatility +620"
   },
   {
     "name": "Killer Arachnocrab Sigil",
     "quality": "Epic",
     "image": "source/sigil/Killer Arachnocrab Sigil.webp",
-    "stat": ""
+    "stat": "Endurance +235",
+    "stat2": "Adaptive Strength/Intellect/Agility +70"
   },
   {
     "name": "Dogorman Sigil",
     "quality": "Epic",
     "image": "source/sigil/Dogorman Sigil.webp",
-    "stat": ""
+    "stat": "Crit +750",
+    "stat2": "Versatility +620"
   },
   {
     "name": "Verdant Fang Sigil",
     "quality": "Epic",
     "image": "source/sigil/Verdant Fang Sigil.webp",
-    "stat": ""
+    "stat": "Haste +750",
+    "stat2": "Versatility +620"
   },
   {
     "name": "Man-Eating Furball Sigil",
     "quality": "Epic",
     "image": "source/sigil/Man-Eating Furball Sigil.webp",
-    "stat": ""
+    "stat": "Luck +750",
+    "stat2": "Versatility +620"
   },
   {
     "name": "Sanctuary Eye Sigil",
     "quality": "Epic",
     "image": "source/sigil/Sanctuary Eye Sigil.webp",
-    "stat": ""
+    "stat": "MASTERY +750",
+    "stat2": "Versatility +620"
   },
   {
     "name": "Predator Arachnocrab Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Predator Arachnocrab Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +66"
   },
   {
     "name": "Rebel King Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Rebel King Sigil.webp",
-    "stat": ""
+    "stat": "Crit +1010",
+    "stat2": "Versatility +880"
   },
   {
     "name": "Ridge Fang Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Ridge Fang Sigil.webp",
-    "stat": ""
+    "stat": "Haste +1010",
+    "stat2": "Versatility +880"
   },
   {
     "name": "Bloodthirsty Furball Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Bloodthirsty Furball Sigil.webp",
-    "stat": ""
+    "stat": "Luck +1010",
+    "stat2": "Versatility +880"
   },
   {
     "name": "Void Watcher Sigil",
     "quality": "Legendary",
     "image": "source/sigil/Void Watcher Sigil.webp",
-    "stat": ""
+    "stat": "Mastery +1010",
+    "stat2": "Versatility +880"
   },
   {
     "name": "Paradox-Calamity Remnant - Origin Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Paradox-Calamity Remnant - Origin Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +72",
+    "stat2": "Strength +95"
   },
   {
     "name": "Paradox-Calamity Remnant - Continuation Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Paradox-Calamity Remnant - Continuation Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +72",
+    "stat2": "Intellect +95"
   },
   {
     "name": "Paradox-Calamity Remnant - Final Sigil",
     "quality": "Mythic",
     "image": "source/sigil/Paradox-Calamity Remnant - Final Sigil.webp",
-    "stat": ""
+    "stat": "All Element Attack +72",
+    "stat2": "Agility +95"
   }
 ]

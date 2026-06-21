@@ -17,12 +17,116 @@ document.addEventListener('click', () => {
 });
 
 // ====== MANEJO DE ESTADO ======
-let plannerState = JSON.parse(localStorage.getItem('checklist_gear_planner_state')) || {};
+let activePresetName = localStorage.getItem('checklist_gear_planner_active_preset');
+let presets = JSON.parse(localStorage.getItem('checklist_gear_planner_presets'));
+
+if (!presets) {
+    // Intentar migrar desde el estado antiguo/legacy
+    const legacyState = JSON.parse(localStorage.getItem('checklist_gear_planner_state'));
+    if (legacyState && Object.keys(legacyState).length > 0) {
+        presets = { "Personaje 1": legacyState };
+        activePresetName = "Personaje 1";
+    } else {
+        presets = { "Personaje 1": {} };
+        activePresetName = "Personaje 1";
+    }
+    localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
+    localStorage.setItem('checklist_gear_planner_active_preset', activePresetName);
+}
+
+if (!activePresetName || !presets[activePresetName]) {
+    activePresetName = Object.keys(presets)[0] || "Personaje 1";
+    localStorage.setItem('checklist_gear_planner_active_preset', activePresetName);
+}
+
+let plannerState = presets[activePresetName] || {};
 
 function saveAndRefresh() {
+    presets[activePresetName] = plannerState;
+    localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
     localStorage.setItem('checklist_gear_planner_state', JSON.stringify(plannerState));
     renderPlanner();
 }
+
+function updatePresetSelect() {
+    const select = document.getElementById('global-preset-select');
+    if (!select) return;
+    
+    select.innerHTML = '';
+    Object.keys(presets).forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        if (name === activePresetName) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+}
+
+window.changePreset = function(name) {
+    if (!presets[name]) return;
+    activePresetName = name;
+    localStorage.setItem('checklist_gear_planner_active_preset', name);
+    plannerState = presets[name];
+    saveAndRefresh();
+};
+
+window.createNewPreset = function() {
+    const isEs = (typeof currentLang !== 'undefined' ? currentLang : 'es') === 'es';
+    const title = isEs ? 'Nombre del nuevo personaje:' : 'New character name:';
+    const errorMsg = isEs ? 'Ese personaje ya existe o el nombre no es válido.' : 'That character already exists or the name is invalid.';
+    const name = prompt(title, "");
+    if (!name) return;
+    const trimmedName = name.trim();
+    if (trimmedName === "" || presets[trimmedName]) {
+        alert(errorMsg);
+        return;
+    }
+    presets[trimmedName] = {};
+    activePresetName = trimmedName;
+    localStorage.setItem('checklist_gear_planner_active_preset', trimmedName);
+    plannerState = presets[trimmedName];
+    saveAndRefresh();
+};
+
+window.renamePreset = function() {
+    const isEs = (typeof currentLang !== 'undefined' ? currentLang : 'es') === 'es';
+    const title = isEs ? `Nuevo nombre para "${activePresetName}":` : `New name for "${activePresetName}":`;
+    const errorMsg = isEs ? 'Ese personaje ya existe o el nombre no es válido.' : 'That character already exists or the name is invalid.';
+    const name = prompt(title, activePresetName);
+    if (!name) return;
+    const trimmedName = name.trim();
+    if (trimmedName === "" || trimmedName === activePresetName) return;
+    if (presets[trimmedName]) {
+        alert(errorMsg);
+        return;
+    }
+    presets[trimmedName] = presets[activePresetName];
+    delete presets[activePresetName];
+    activePresetName = trimmedName;
+    localStorage.setItem('checklist_gear_planner_active_preset', trimmedName);
+    localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
+    saveAndRefresh();
+};
+
+window.deletePreset = function() {
+    const isEs = (typeof currentLang !== 'undefined' ? currentLang : 'es') === 'es';
+    const keys = Object.keys(presets);
+    if (keys.length <= 1) {
+        const errorMsg = isEs ? 'No puedes eliminar tu único personaje.' : 'You cannot delete your only character.';
+        alert(errorMsg);
+        return;
+    }
+    const confirmMsg = isEs ? `¿Seguro que deseas eliminar el personaje "${activePresetName}"?` : `Are you sure you want to delete the character "${activePresetName}"?`;
+    if (!confirm(confirmMsg)) return;
+    
+    delete presets[activePresetName];
+    activePresetName = Object.keys(presets)[0];
+    localStorage.setItem('checklist_gear_planner_active_preset', activePresetName);
+    plannerState = presets[activePresetName];
+    saveAndRefresh();
+};
 
 // ====== FUNCIONES GLOBALES (Llamadas desde el HTML) ======
 window.togglePanel = function(contentId, iconId) {
@@ -89,10 +193,13 @@ window.toggleCustomDropdown = function(dropdownId) {
 };
 
 window.resetPlanner = function() {
-    if (confirm('¿Restablecer todo el planificador? Se perderá el progreso / Reset all data?')) {
+    const isEs = (typeof currentLang !== 'undefined' ? currentLang : 'es') === 'es';
+    const confirmMsg = isEs ? 
+        `¿Restablecer el personaje "${activePresetName}"? Se perderá todo su progreso.` : 
+        `Reset character "${activePresetName}"? All progress will be lost.`;
+    if (confirm(confirmMsg)) {
         plannerState = {};
-        localStorage.removeItem('checklist_gear_planner_state');
-        renderPlanner();
+        saveAndRefresh();
     }
 };
 
@@ -192,6 +299,7 @@ function updateGlobalStats() {
 
 // ====== RENDERIZADO PRINCIPAL ======
 window.renderPlanner = function() {
+    updatePresetSelect();
     if (!plannerState.build) plannerState.build = 'strength';
     const buildSelect = document.getElementById('global-build-select');
     if (buildSelect) buildSelect.value = plannerState.build;
@@ -363,18 +471,25 @@ window.renderPlanner = function() {
         const filteredSigils = sigilData.filter(sigil => isSigilAllowedForGear(sigil.id, gear.id));
         dropdownItemsHTML += filteredSigils.map(sigil => {
             const color = qualityColors[sigil.quality] || '#ffffff';
+            const statsText = sigil.stat2 ? `${sigil.stat} / ${sigil.stat2}` : sigil.stat;
             return `
-                <div onclick="updateSigil('${gear.id}', '${sigil.id}')" class="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800/80 cursor-pointer text-xs font-bold select-none" style="color: ${color};">
-                    <img src="${sigil.image}" class="w-5 h-5 object-contain rounded bg-gray-950 border border-gray-800 flex-shrink-0" onerror="this.src='https://via.placeholder.com/20'">
-                    <span class="truncate">${t(sigil.nameKey)}</span>
+                <div onclick="updateSigil('${gear.id}', '${sigil.id}')" class="flex items-center justify-between gap-2.5 px-3 py-2 hover:bg-gray-800/80 cursor-pointer text-xs font-bold select-none" style="color: ${color};">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <img src="${sigil.image}" class="w-5 h-5 object-contain rounded bg-gray-950 border border-gray-800 flex-shrink-0" onerror="this.src='https://via.placeholder.com/20'">
+                        <span class="truncate">${t(sigil.nameKey)}</span>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-mono flex-shrink-0 ml-auto pl-2">${statsText}</span>
                 </div>
             `;
         }).join('');
 
         const banned = bannedStats[activeBuild][gear.id] || [];
         
-        const primOptions = allBaseStats.filter(s => !banned.includes(s.key) && s.key !== state.secondary).map(opt => `<option value="${opt.key}" ${state.primary === opt.key ? 'selected' : ''}>${opt.label}</option>`).join('');
-        const secOptions = allBaseStats.filter(s => !banned.includes(s.key) && s.key !== state.primary).map(opt => `<option value="${opt.key}" ${state.secondary === opt.key ? 'selected' : ''}>${opt.label}</option>`).join('');
+        const emptyPrimOption = `<option value="" ${!state.primary ? 'selected' : ''}>${t('stat_empty')}</option>`;
+        const primOptions = emptyPrimOption + allBaseStats.filter(s => !banned.includes(s.key) && s.key !== state.secondary).map(opt => `<option value="${opt.key}" ${state.primary === opt.key ? 'selected' : ''}>${opt.label}</option>`).join('');
+        
+        const emptySecOption = `<option value="" ${!state.secondary ? 'selected' : ''}>${t('stat_empty')}</option>`;
+        const secOptions = emptySecOption + allBaseStats.filter(s => !banned.includes(s.key) && s.key !== state.primary).map(opt => `<option value="${opt.key}" ${state.secondary === opt.key ? 'selected' : ''}>${opt.label}</option>`).join('');
         
         const rareOpts = rareStatsData[activeBuild][gear.id] || [];
         const rareOptionsHTML = rareOpts.map(opt => `<option value="${opt}" ${state.rare === opt ? 'selected' : ''}>${opt}</option>`).join('');
@@ -492,12 +607,12 @@ window.renderPlanner = function() {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div id="dropdown-${gear.id}" class="hidden absolute z-50 bottom-full mb-1 left-0 right-0 max-h-60 overflow-y-auto bg-gray-950 border border-gray-800 rounded-lg shadow-2xl divide-y divide-gray-900/60 custom-scrollbar scrollbar-thin">
+                        <div id="dropdown-${gear.id}" class="hidden absolute z-50 bottom-full mb-1 left-0 w-[180%] max-w-[340px] max-h-60 overflow-y-auto bg-gray-950 border border-gray-800 rounded-lg shadow-2xl divide-y divide-gray-900/60 custom-scrollbar scrollbar-thin">
                             ${dropdownItemsHTML}
                         </div>
                     </div>
-                    <span class="text-[10px] text-gray-500 font-mono truncate w-1/2 text-right">
-                        ${t('ui_bonus')} <span class="text-gray-300">${currentSigil.stat}</span>
+                    <span class="text-[10px] text-gray-500 font-mono truncate w-1/2 text-right" title="${currentSigil.stat2 ? `${currentSigil.stat} / ${currentSigil.stat2}` : (currentSigil.stat || '')}">
+                        ${t('ui_bonus')} <span class="text-gray-300">${currentSigil.stat || ''}${currentSigil.stat2 ? ` / ${currentSigil.stat2}` : ''}</span>
                     </span>
                 </div>
             </div>`;

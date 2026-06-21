@@ -19,427 +19,463 @@ const sigilData = [
     nameKey: 'sigil_cabbage_killer',
     quality: 'Rare',
     image: 'source/sigil/Cabbage Killer Sigil.webp',
-    stat: ''
+    stat: 'Crit 200'
   },
   {
     id: 'wastelandFoxen',
     nameKey: 'sigil_wasteland_foxen',
     quality: 'Rare',
     image: 'source/sigil/Wasteland Foxen Sigil.webp',
-    stat: ''
+    stat: 'Haste +200'
   },
   {
     id: 'cabbageToughGuy',
     nameKey: 'sigil_cabbage_tough_guy',
     quality: 'Rare',
     image: 'source/sigil/Cabbage Tough Guy Sigil.webp',
-    stat: ''
+    stat: 'Luck +200'
   },
   {
     id: 'glimmerCaprahorn',
     nameKey: 'sigil_glimmer_caprahorn',
     quality: 'Rare',
     image: 'source/sigil/Glimmer Caprahorn Sigil.webp',
-    stat: ''
+    stat: 'Mastery +200'
   },
   {
     id: 'cabbageBlaster',
     nameKey: 'sigil_cabbage_blaster',
     quality: 'Rare',
     image: 'source/sigil/Cabbage Blaster Sigil.webp',
-    stat: ''
+    stat: 'Versatility +200'
   },
   {
     id: 'netherCaprahorn',
     nameKey: 'sigil_nether_caprahorn',
     quality: 'Rare',
     image: 'source/sigil/Nether Caprahorn Sigil.webp',
-    stat: ''
+    stat: 'Endurance +50',
+    stat2: 'Strength +15'
   },
   {
     id: 'cabbageHunter',
     nameKey: 'sigil_cabbage_hunter',
     quality: 'Rare',
     image: 'source/sigil/Cabbage Hunter Sigil.webp',
-    stat: ''
+    stat: 'Endurance +50',
+    stat2: 'Intellect +15'
   },
   {
     id: 'foxen',
     nameKey: 'sigil_foxen',
     quality: 'Rare',
     image: 'source/sigil/Foxen Sigil.webp',
-    stat: ''
+    stat: 'Endurance +50',
+    stat2: 'Agility +15'
   },
   {
     id: 'frostLizard',
     nameKey: 'sigil_frost_lizard',
     quality: 'Rare',
     image: 'source/sigil/Frost Lizard Sigil.webp',
-    stat: ''
+    stat: 'Strength +12',
+    stat2: 'Crit +140'
   },
   {
     id: 'magmaLizard',
     nameKey: 'sigil_magma_lizard',
     quality: 'Rare',
     image: 'source/sigil/Magma Lizard Sigil.webp',
-    stat: ''
+    stat: 'Strength +12',
+    stat2: 'Haste +140'
   },
   {
     id: 'galeLizard',
     nameKey: 'sigil_gale_lizard',
     quality: 'Rare',
     image: 'source/sigil/Gale Lizard Sigil.webp',
-    stat: ''
+    stat: 'Strength +12',
+    stat2: 'Luck +140'
   },
   {
     id: 'lightningLizard',
     nameKey: 'sigil_lightning_lizard',
     quality: 'Rare',
     image: 'source/sigil/Lightning Lizard Sigil.webp',
-    stat: ''
+    stat: 'Strength +12',
+    stat2: 'Mastery +140'
   },
   {
     id: 'blackstoneMarksman',
     nameKey: 'sigil_blackstone_marksman',
     quality: 'Rare',
     image: 'source/sigil/Blackstone Marksman Sigil.webp',
-    stat: ''
+    stat: 'Intellect +12',
+    stat2: 'Crit +140'
   },
   {
     id: 'blackstoneGuard',
     nameKey: 'sigil_blackstone_guard',
     quality: 'Rare',
     image: 'source/sigil/Blackstone Guard Sigil.webp',
-    stat: ''
+    stat: 'Intellect +12',
+    stat2: 'Haste +140'
   },
   {
     id: 'blackstoneWarrior',
     nameKey: 'sigil_blackstone_warrior',
     quality: 'Rare',
     image: 'source/sigil/Blackstone Warrior Sigil.webp',
-    stat: ''
+    stat: 'Intellect +12',
+    stat2: 'Luck +140'
   },
   {
     id: 'blackstoneAssaulter',
     nameKey: 'sigil_blackstone_assaulter',
     quality: 'Rare',
     image: 'source/sigil/Blackstone Assaulter Sigil.webp',
-    stat: ''
+    stat: 'Intellect +12',
+    stat2: 'Mastery +140'
   },
   {
     id: 'goblinWarrior',
     nameKey: 'sigil_goblin_warrior',
     quality: 'Rare',
     image: 'source/sigil/Goblin Warrior Sigil.webp',
-    stat: ''
+    stat: 'Agility +12',
+    stat2: 'Crit +140'
   },
   {
     id: 'goblinAxeman',
     nameKey: 'sigil_goblin_axeman',
     quality: 'Rare',
     image: 'source/sigil/Goblin Axeman Sigil.webp',
-    stat: ''
+    stat: 'Agility +12',
+    stat2: 'Haste +140'
   },
   {
     id: 'goblinPriest',
     nameKey: 'sigil_goblin_priest',
     quality: 'Rare',
     image: 'source/sigil/Goblin Priest Sigil.webp',
-    stat: ''
+    stat: 'Agility +12',
+    stat2: 'Luck +140'
   },
   {
     id: 'goblinSentry',
     nameKey: 'sigil_goblin_sentry',
     quality: 'Rare',
     image: 'source/sigil/Goblin Sentry Sigil.webp',
-    stat: ''
+    stat: 'Agility +12',
+    stat2: 'Mastery +140'
   },
   {
     id: 'bluespineLizard',
     nameKey: 'sigil_bluespine_lizard',
     quality: 'Epic',
     image: 'source/sigil/Bluespine Lizard Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +20'
   },
   {
     id: 'emeraldCaprahorn',
     nameKey: 'sigil_emerald_caprahorn',
     quality: 'Epic',
     image: 'source/sigil/Emerald Caprahorn Sigil.webp',
-    stat: ''
+    stat: 'Endurance +80',
+    stat2: 'Strength +25'
   },
   {
     id: 'blackstoneCommander',
     nameKey: 'sigil_blackstone_commander',
     quality: 'Epic',
     image: 'source/sigil/Blackstone Commander Sigil.webp',
-    stat: ''
+    stat: 'Endurance +80',
+    stat2: 'Intellect +25'
   },
   {
     id: 'blackfireFoxen',
     nameKey: 'sigil_blackfire_foxen',
     quality: 'Epic',
     image: 'source/sigil/Blackfire Foxen Sigil.webp',
-    stat: ''
+    stat: 'Endurance +80',
+    stat2: 'Agility +25'
   },
   {
     id: 'gloomyCabbage',
     nameKey: 'sigil_gloomy_cabbage',
     quality: 'Epic',
     image: 'source/sigil/Gloomy Cabbage Sigil.webp',
-    stat: ''
+    stat: 'Crit 300'
   },
   {
     id: 'blackstoneVanguard',
     nameKey: 'sigil_blackstone_vanguard',
     quality: 'Epic',
     image: 'source/sigil/Blackstone Vanguard Sigil.webp',
-    stat: ''
+    stat: 'Haste +300'
   },
   {
     id: 'ruthlessCabbage',
     nameKey: 'sigil_ruthless_cabbage',
     quality: 'Epic',
     image: 'source/sigil/Ruthless Cabbage Sigil.webp',
-    stat: ''
+    stat: 'Luck +300'
   },
   {
     id: 'goblinTrickster',
     nameKey: 'sigil_goblin_trickster',
     quality: 'Epic',
     image: 'source/sigil/Goblin Trickster Sigil.webp',
-    stat: ''
+    stat: 'Mastery +300'
   },
   {
     id: 'goblinShaman',
     nameKey: 'sigil_goblin_shaman',
     quality: 'Epic',
     image: 'source/sigil/Goblin Shaman Sigil.webp',
-    stat: ''
+    stat: 'Versatility +300'
   },
   {
     id: 'basilisk',
     nameKey: 'sigil_basilisk',
     quality: 'Legendary',
     image: 'source/sigil/Basilisk Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +40'
   },
   {
     id: 'goblinChief',
     nameKey: 'sigil_goblin_chief',
     quality: 'Legendary',
     image: 'source/sigil/Goblin Chief Sigil.webp',
-    stat: ''
+    stat: 'Crit 500'
   },
   {
     id: 'crimsonFoxen',
     nameKey: 'sigil_crimson_foxen',
     quality: 'Legendary',
     image: 'source/sigil/Crimson Foxen Sigil.webp',
-    stat: ''
+    stat: 'Haste +500'
   },
   {
     id: 'cabbageKingpin',
     nameKey: 'sigil_cabbage_kingpin',
     quality: 'Legendary',
     image: 'source/sigil/Cabbage Kingpin Sigil.webp',
-    stat: ''
+    stat: 'Luck +500'
   },
   {
     id: 'blackstoneCaptain',
     nameKey: 'sigil_blackstone_captain',
     quality: 'Legendary',
     image: 'source/sigil/Blackstone Captain Sigil.webp',
-    stat: ''
+    stat: 'Mastery +500'
   },
   {
     id: 'flamehorn',
     nameKey: 'sigil_flamehorn',
     quality: 'Legendary',
     image: 'source/sigil/Flamehorn Sigil.webp',
-    stat: ''
+    stat: 'Versatility +500'
   },
   {
     id: 'caprahornBloomSteel',
     nameKey: 'sigil_caprahorn_bloom_steel',
     quality: 'Mythic',
     image: 'source/sigil/Caprahorn - Bloom & Steel Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +40',
+    stat2: 'Strength +50'
   },
   {
     id: 'witheredBloomshard',
     nameKey: 'sigil_withered_bloomshard',
     quality: 'Mythic',
     image: 'source/sigil/Withered Bloomshard Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +40',
+    stat2: 'Intellect +50'
   },
   {
     id: 'erosionBloomAfterimage',
     nameKey: 'sigil_erosion_bloom_afterimage',
     quality: 'Mythic',
     image: 'source/sigil/Erosion Bloom Afterimage Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +40',
+    stat2: 'Agility +50'
   },
   {
     id: 'infernalArachnocrab',
     nameKey: 'sigil_infernal_arachnocrab',
     quality: 'Rare',
     image: 'source/sigil/Infernal Arachnocrab Sigil.webp',
-    stat: ''
+    stat: 'ATK +38'
   },
   {
     id: 'wastelandArachnocrab',
     nameKey: 'sigil_wasteland_arachnocrab',
     quality: 'Rare',
     image: 'source/sigil/Wasteland Arachnocrab Sigil.webp',
-    stat: ''
+    stat: 'MATK +38'
   },
   {
     id: 'sandstoneYeti',
     nameKey: 'sigil_sandstone_yeti',
     quality: 'Rare',
     image: 'source/sigil/Sandstone Yeti Sigil.webp',
-    stat: ''
+    stat: 'Strength +60',
+    stat2: 'Endurance +195'
   },
   {
     id: 'ashenYeti',
     nameKey: 'sigil_ashen_yeti',
     quality: 'Rare',
     image: 'source/sigil/Ashen Yeti Sigil.webp',
-    stat: ''
+    stat: 'Intellect +60',
+    stat2: 'Endurance +195'
   },
   {
     id: 'wildMountainBoar',
     nameKey: 'sigil_wild_mountain_boar',
     quality: 'Rare',
     image: 'source/sigil/Wild Mountain Boar Sigil.webp',
-    stat: ''
+    stat: 'Agility +60',
+    stat2: 'Endurance +195'
   },
   {
     id: 'hunterMountainBoar',
     nameKey: 'sigil_hunter_mountain_boar',
     quality: 'Rare',
     image: 'source/sigil/Hunter Mountain Boar Sigil.webp',
-    stat: ''
+    stat: 'Crit +620'
   },
   {
     id: 'gnashingFurball',
     nameKey: 'sigil_gnashing_furball',
     quality: 'Rare',
     image: 'source/sigil/Gnashing Furball Sigil.webp',
-    stat: ''
+    stat: 'Haste +620'
   },
   {
     id: 'spikyFurball',
     nameKey: 'sigil_spiky_furball',
     quality: 'Rare',
     image: 'source/sigil/Spiky Furball Sigil.webp',
-    stat: ''
+    stat: 'Luck +620'
   },
   {
     id: 'patrollingOculoid',
     nameKey: 'sigil_patrolling_oculoid',
     quality: 'Rare',
     image: 'source/sigil/Patrolling Oculoid Sigil.webp',
-    stat: ''
+    stat: 'Mastery +620'
   },
   {
     id: 'mechcoreOculoid',
     nameKey: 'sigil_mechcore_oculoid',
     quality: 'Rare',
     image: 'source/sigil/Mechcore Oculoid Sigil.webp',
-    stat: ''
+    stat: 'Versatility +620'
   },
   {
     id: 'killerArachnocrab',
     nameKey: 'sigil_killer_arachnocrab',
     quality: 'Epic',
     image: 'source/sigil/Killer Arachnocrab Sigil.webp',
-    stat: ''
+    stat: 'Endurance +235',
+    stat2: 'Adaptive Strength/Intellect/Agility +70'
   },
   {
     id: 'dogorman',
     nameKey: 'sigil_dogorman',
     quality: 'Epic',
     image: 'source/sigil/Dogorman Sigil.webp',
-    stat: ''
+    stat: 'Crit +750',
+    stat2: 'Versatility +620'
   },
   {
     id: 'verdantFang',
     nameKey: 'sigil_verdant_fang',
     quality: 'Epic',
     image: 'source/sigil/Verdant Fang Sigil.webp',
-    stat: ''
+    stat: 'Haste +750',
+    stat2: 'Versatility +620'
   },
   {
     id: 'manEatingFurball',
     nameKey: 'sigil_man_eating_furball',
     quality: 'Epic',
     image: 'source/sigil/Man-Eating Furball Sigil.webp',
-    stat: ''
+    stat: 'Luck +750',
+    stat2: 'Versatility +620'
   },
   {
     id: 'sanctuaryEye',
     nameKey: 'sigil_sanctuary_eye',
     quality: 'Epic',
     image: 'source/sigil/Sanctuary Eye Sigil.webp',
-    stat: ''
+    stat: 'MASTERY +750',
+    stat2: 'Versatility +620'
   },
   {
     id: 'predatorArachnocrab',
     nameKey: 'sigil_predator_arachnocrab',
     quality: 'Legendary',
     image: 'source/sigil/Predator Arachnocrab Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +66'
   },
   {
     id: 'rebelKing',
     nameKey: 'sigil_rebel_king',
     quality: 'Legendary',
     image: 'source/sigil/Rebel King Sigil.webp',
-    stat: ''
+    stat: 'Crit +1010',
+    stat2: 'Versatility +880'
   },
   {
     id: 'ridgeFang',
     nameKey: 'sigil_ridge_fang',
     quality: 'Legendary',
     image: 'source/sigil/Ridge Fang Sigil.webp',
-    stat: ''
+    stat: 'Haste +1010',
+    stat2: 'Versatility +880'
   },
   {
     id: 'bloodthirstyFurball',
     nameKey: 'sigil_bloodthirsty_furball',
     quality: 'Legendary',
     image: 'source/sigil/Bloodthirsty Furball Sigil.webp',
-    stat: ''
+    stat: 'Luck +1010',
+    stat2: 'Versatility +880'
   },
   {
     id: 'voidWatcher',
     nameKey: 'sigil_void_watcher',
     quality: 'Legendary',
     image: 'source/sigil/Void Watcher Sigil.webp',
-    stat: ''
+    stat: 'Mastery +1010',
+    stat2: 'Versatility +880'
   },
   {
     id: 'paradoxCalamityRemnantOrigin',
     nameKey: 'sigil_paradox_calamity_remnant_origin',
     quality: 'Mythic',
     image: 'source/sigil/Paradox-Calamity Remnant - Origin Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +72',
+    stat2: 'Strength +95'
   },
   {
     id: 'paradoxCalamityRemnantContinuation',
     nameKey: 'sigil_paradox_calamity_remnant_continuation',
     quality: 'Mythic',
     image: 'source/sigil/Paradox-Calamity Remnant - Continuation Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +72',
+    stat2: 'Intellect +95'
   },
   {
     id: 'paradoxCalamityRemnantFinal',
     nameKey: 'sigil_paradox_calamity_remnant_final',
     quality: 'Mythic',
     image: 'source/sigil/Paradox-Calamity Remnant - Final Sigil.webp',
-    stat: ''
+    stat: 'All Element Attack +72',
+    stat2: 'Agility +95'
   }
 ];
 

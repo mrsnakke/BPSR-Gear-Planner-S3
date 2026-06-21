@@ -8,6 +8,10 @@ const translations = {
         ui_reset: "Reiniciar",
         ui_inventory: "Inventario de Equipo",
         ui_footer: "Planner interactivo. El progreso se guarda automáticamente en tu navegador.",
+        ui_preset: "Personaje:",
+        ui_create_preset_tooltip: "Nuevo Personaje",
+        ui_rename_preset_tooltip: "Renombrar Personaje",
+        ui_delete_preset_tooltip: "Eliminar Personaje",
         ui_priority_title: "🎯 Prioridad de Farmeo",
         ui_priority_subtitle: "Menos stats = Mayor prioridad",
         ui_dungeon_title: "🗺️ Mazmorras Recomendadas",
@@ -116,6 +120,10 @@ const translations = {
         ui_reset: "Reset",
         ui_inventory: "Gear Inventory",
         ui_footer: "Interactive Planner. Progress is automatically saved in your browser.",
+        ui_preset: "Character:",
+        ui_create_preset_tooltip: "New Character",
+        ui_rename_preset_tooltip: "Rename Character",
+        ui_delete_preset_tooltip: "Delete Character",
         ui_priority_title: "🎯 Farming Priority",
         ui_priority_subtitle: "Less stats = Higher priority",
         ui_dungeon_title: "🗺️ Recommended Dungeons",
@@ -242,6 +250,19 @@ window.changeLanguage = function(lang) {
     document.getElementById('ui-reset-btn').innerText = t('ui_reset');
     document.getElementById('ui-inventory-title').innerText = t('ui_inventory');
     document.getElementById('ui-footer-text').innerText = t('ui_footer');
+    
+    // Elementos del selector de presets/personajes
+    const presetLabel = document.getElementById('ui-preset-label');
+    if (presetLabel) presetLabel.innerText = t('ui_preset');
+    
+    const createBtn = document.getElementById('ui-create-preset-btn');
+    if (createBtn) createBtn.title = t('ui_create_preset_tooltip');
+    
+    const renameBtn = document.getElementById('ui-rename-preset-btn');
+    if (renameBtn) renameBtn.title = t('ui_rename_preset_tooltip');
+    
+    const deleteBtn = document.getElementById('ui-delete-preset-btn');
+    if (deleteBtn) deleteBtn.title = t('ui_delete_preset_tooltip');
     document.getElementById('opt-strength').innerText = currentLang === 'es' ? 'Fuerza' : 'Strength';
     document.getElementById('opt-intelligence').innerText = currentLang === 'es' ? 'Inteligencia' : 'Intelligence';
     document.getElementById('opt-agility').innerText = currentLang === 'es' ? 'Agilidad' : 'Agility';
