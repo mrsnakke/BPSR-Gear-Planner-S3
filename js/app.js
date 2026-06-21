@@ -276,7 +276,8 @@ function validateGearStats(gearId) {
     if (state.primary && !allowedStats.includes(state.primary)) state.primary = '';
     if (state.secondary && !allowedStats.includes(state.secondary)) state.secondary = '';
 
-    const rareOpts = rareStatsData[build][gearId] || [];
+    const lvl = state.level || 'Lv220';
+    const rareOpts = (rareStatsData[lvl] && rareStatsData[lvl][build] && rareStatsData[lvl][build][gearId]) || [];
     if (!rareOpts.includes(state.rare)) state.rare = rareOpts[0] || '';
 
     if (state.sigil && state.sigil !== 'none' && !isSigilAllowedForGear(state.sigil, gearId)) {
@@ -491,7 +492,8 @@ window.renderPlanner = function() {
         const emptySecOption = `<option value="" ${!state.secondary ? 'selected' : ''}>${t('stat_empty')}</option>`;
         const secOptions = emptySecOption + allBaseStats.filter(s => !banned.includes(s.key) && s.key !== state.primary).map(opt => `<option value="${opt.key}" ${state.secondary === opt.key ? 'selected' : ''}>${opt.label}</option>`).join('');
         
-        const rareOpts = rareStatsData[activeBuild][gear.id] || [];
+        const lvl = state.level || 'Lv220';
+        const rareOpts = (rareStatsData[lvl] && rareStatsData[lvl][activeBuild] && rareStatsData[lvl][activeBuild][gear.id]) || [];
         const rareOptionsHTML = rareOpts.map(opt => `<option value="${opt}" ${state.rare === opt ? 'selected' : ''}>${opt}</option>`).join('');
         const levelOptions = ['Lv220', 'Lv240', 'Lv260'].map(lvl => `<option value="${lvl}" ${state.level === lvl ? 'selected' : ''} class="level-selector-option">${lvl}</option>`).join('');
 
