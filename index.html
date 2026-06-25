@@ -14,69 +14,92 @@
 <body class="text-gray-100 min-h-screen pb-12">
 
     <!-- Header Section -->
-    <header id="main-header" class="border-b border-gray-800 bg-gray-950 bg-opacity-90 backdrop-blur sticky top-0 z-50 py-4 px-6 mb-8 shadow-md transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold tracking-wider bg-gradient-to-r from-gameOrange via-gameGold to-gamePurple bg-clip-text text-transparent uppercase text-center md:text-left">
+    <header id="main-header" class="border-b border-gray-800 bg-gray-950 bg-opacity-90 backdrop-blur sticky top-0 z-50 py-3 px-4 mb-6 shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <!-- Title + Language inline -->
+            <div class="flex items-center justify-center lg:justify-start gap-3">
+                <h1 class="text-xl lg:text-2xl font-extrabold tracking-wider bg-gradient-to-r from-gameOrange via-gameGold to-gamePurple bg-clip-text text-transparent uppercase whitespace-nowrap">
                     Gear Planner
                 </h1>
+                <div class="flex items-center gap-1 bg-gray-900 border border-gray-800 p-1 rounded-lg shadow-lg">
+                    <button onclick="changeLanguage('es')" id="btn-lang-es" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-gameOrange text-white">ES</button>
+                    <button onclick="changeLanguage('en')" id="btn-lang-en" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-gray-500 hover:text-white">EN</button>
+                </div>
             </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                
-                <!-- Selector de Idioma -->
-                <div class="flex items-center gap-2 bg-gray-900 border border-gray-800 p-1.5 rounded-xl shadow-lg">
-                    <button onclick="changeLanguage('es')" id="btn-lang-es" class="px-2 py-1 text-xs font-bold rounded bg-gameOrange text-white">ES</button>
-                    <button onclick="changeLanguage('en')" id="btn-lang-en" class="px-2 py-1 text-xs font-bold rounded text-gray-500 hover:text-white">EN</button>
-                </div>
-
-                <!-- Selector de Personaje (Presets) -->
-                <div class="flex items-center gap-2 bg-gray-900 border border-gray-800 p-2 rounded-xl shadow-lg">
-                    <span id="ui-preset-label" class="text-xs uppercase tracking-widest text-gray-400 font-semibold pl-2">Personaje:</span>
-                    <select id="global-preset-select" onchange="changePreset(this.value)" class="bg-gray-950 border border-gray-700 text-gameGold text-sm font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-gameGold cursor-pointer transition-colors hover:bg-gray-800">
+            <!-- Right: Presets + Build + Spec + Stats -->
+            <div class="flex flex-wrap items-center justify-center lg:justify-end gap-2">
+                <!-- Presets -->
+                <div class="flex items-center gap-1 bg-gray-900 border border-gray-800 p-1.5 rounded-lg shadow-lg">
+                    <span id="ui-preset-label" class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold pl-1 lg:hidden">Personaje:</span>
+                    <select id="global-preset-select" onchange="changePreset(this.value)" class="bg-gray-950 border border-gray-700 text-gameGold text-xs font-bold rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameGold cursor-pointer transition-colors hover:bg-gray-800">
                         <!-- Se llena dinámicamente -->
                     </select>
-                    <button onclick="createNewPreset()" id="ui-create-preset-btn" title="Nuevo Personaje" class="p-1.5 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gameGold hover:text-white transition-colors duration-200">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button onclick="createNewPreset()" id="ui-create-preset-btn" title="Nuevo Personaje" class="p-1 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gameGold hover:text-white transition-colors duration-200">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                     </button>
-                    <button onclick="renamePreset()" id="ui-rename-preset-btn" title="Renombrar Personaje" class="p-1.5 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gameGold hover:text-white transition-colors duration-200">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button onclick="renamePreset()" id="ui-rename-preset-btn" title="Renombrar Personaje" class="p-1 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gameGold hover:text-white transition-colors duration-200">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
                     </button>
-                    <button onclick="deletePreset()" id="ui-delete-preset-btn" title="Eliminar Personaje" class="p-1.5 bg-red-950/40 hover:bg-red-900 border border-red-900/50 hover:border-red-600 rounded-lg text-red-300 transition-colors duration-200">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button onclick="deletePreset()" id="ui-delete-preset-btn" title="Eliminar Personaje" class="p-1 bg-red-950/40 hover:bg-red-900 border border-red-900/50 hover:border-red-600 rounded-lg text-red-300 transition-colors duration-200">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                    <button onclick="sharePreset()" id="ui-share-preset-btn" title="Compartir" class="p-1 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-gameGold transition-colors duration-200">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                    </button>
+                    <button onclick="showImportModal()" id="ui-import-preset-btn" title="Importar" class="p-1 bg-gray-950 hover:bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-gameOrange transition-colors duration-200">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                         </svg>
                     </button>
                 </div>
 
-                <!-- Build Selector -->
-                <div class="flex items-center gap-3 bg-gray-900 border border-gray-800 p-2 rounded-xl shadow-lg">
-                    <span id="ui-build-label" class="text-xs uppercase tracking-widest text-gray-400 font-semibold pl-2">Build:</span>
-                    <select id="global-build-select" onchange="changeBuild(this.value)" class="bg-gray-950 border border-gray-700 text-gameGold text-sm font-bold rounded-lg px-3 py-1.5 focus:outline-none focus:border-gameGold cursor-pointer transition-colors hover:bg-gray-800">
+                <!-- Build -->
+                <div class="flex items-center gap-1.5 bg-gray-900 border border-gray-800 p-1.5 rounded-lg shadow-lg">
+                    <img id="build-select-icon" class="w-5 h-5 rounded" src="" alt="">
+                    <span id="ui-build-label" class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold lg:hidden">Build:</span>
+                    <select id="global-build-select" onchange="changeBuild(this.value)" class="bg-gray-950 border border-gray-700 text-gameGold text-xs font-bold rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameGold cursor-pointer transition-colors hover:bg-gray-800">
                         <option value="strength" id="opt-strength">Fuerza</option>
                         <option value="intelligence" id="opt-intelligence">Inteligencia</option>
                         <option value="agility" id="opt-agility">Agilidad</option>
                     </select>
                 </div>
+
+                <!-- Spec -->
+                <div class="flex items-center gap-1.5 bg-gray-900 border border-gray-800 p-1.5 rounded-lg shadow-lg">
+                    <span id="ui-spec-label" class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold lg:hidden">Spec:</span>
+                    <div class="relative">
+                        <button id="global-spec-btn" onclick="event.stopPropagation(); toggleCustomDropdown('dropdown-spec')" class="flex items-center gap-1.5 bg-gray-950 border border-gray-700 text-gameOrange text-xs font-bold rounded-lg px-2 py-1 focus:outline-none cursor-pointer hover:bg-gray-800 transition-colors min-w-[110px]">
+                            <img id="spec-select-icon" class="w-4 h-4 rounded" src="" alt="">
+                            <span id="spec-select-text" class="truncate">— Select Spec —</span>
+                            <svg class="w-2.5 h-2.5 text-gray-500 ml-auto flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div id="dropdown-spec" class="hidden absolute z-50 top-full mt-1 left-0 w-full max-h-60 overflow-y-auto bg-gray-950 border border-gray-800 rounded-lg shadow-2xl divide-y divide-gray-900/60 custom-scrollbar scrollbar-thin"></div>
+                    </div>
+                </div>
                 
-                <!-- Global Stats Summary Panel -->
-                <div class="flex items-center gap-4 bg-gray-900 border border-gray-800 p-2 rounded-xl shadow-lg">
-                    <div class="text-center px-3">
-                        <span id="ui-bis-label" class="block text-xs uppercase tracking-widest text-gray-400 font-semibold">BiS</span>
-                        <span id="global-progress" class="text-xl font-bold text-gameGold">0/11</span>
+                <!-- Stats -->
+                <div class="flex items-center gap-2 bg-gray-900 border border-gray-800 p-1.5 rounded-lg shadow-lg">
+                    <div class="text-center px-1.5">
+                        <span id="ui-bis-label" class="block text-[9px] uppercase tracking-widest text-gray-400 font-semibold lg:hidden">BiS</span>
+                        <span id="global-progress" class="text-base font-bold text-gameGold">0/11</span>
                     </div>
-                    <div class="h-8 w-px bg-gray-800 hidden sm:block"></div>
-                    <div class="text-center px-3 hidden sm:block">
-                        <span id="ui-sigils-label" class="block text-xs uppercase tracking-widest text-gray-400 font-semibold">Sigilos</span>
-                        <span id="global-sigils" class="text-xl font-bold text-gamePurple">0</span>
+                    <div class="h-6 w-px bg-gray-800"></div>
+                    <div class="text-center px-1.5">
+                        <span id="ui-sigils-label" class="block text-[9px] uppercase tracking-widest text-gray-400 font-semibold lg:hidden">Sigilos</span>
+                        <span id="global-sigils" class="text-base font-bold text-gamePurple">0</span>
                     </div>
-                    <div class="h-8 w-px bg-gray-800"></div>
-                    <div class="pr-1">
-                        <button onclick="resetPlanner()" id="ui-reset-btn" class="px-3 py-1.5 bg-red-950/50 hover:bg-red-900 border border-red-900 hover:border-red-600 text-red-300 text-xs font-semibold rounded-lg uppercase tracking-wider transition-colors duration-200">
+                    <div class="h-6 w-px bg-gray-800"></div>
+                    <div>
+                        <button onclick="resetPlanner()" id="ui-reset-btn" class="px-2 py-1 bg-red-950/50 hover:bg-red-900 border border-red-900 hover:border-red-600 text-red-300 text-[10px] font-semibold rounded-lg uppercase tracking-wider transition-colors duration-200">
                             Reset
                         </button>
                     </div>
@@ -91,6 +114,7 @@
         <!-- Contenedores Dinámicos -->
         <div id="priority-farming-panel" class="mb-8"></div>
         <div id="dungeon-efficiency-panel" class="mb-10"></div>
+        <div id="raid-sets-panel" class="mb-10"></div>
 
         <!-- Título de Sección -->
         <div class="flex items-center gap-3 mb-6">
@@ -99,15 +123,29 @@
         </div>
 
         <!-- Contenedor Principal de Cartas -->
-        <div id="gear-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"></div>
+        <div id="gear-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"></div>
 
     </main>
+
+    <!-- Modal de Importación -->
+    <div id="import-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onclick="if(event.target===this)hideImportModal()">
+        <div class="bg-gray-950 border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl mx-4">
+            <h3 id="ui-import-title" class="text-lg font-bold text-white mb-1">Importar Gear Planner</h3>
+            <p id="ui-import-desc" class="text-xs text-gray-400 mb-4">Pega el código compartido para crear un nuevo personaje.</p>
+            <textarea id="import-textarea" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 font-mono h-28 resize-none focus:outline-none focus:border-gameOrange" placeholder="Pega el código aquí..."></textarea>
+            <div class="flex justify-end gap-3 mt-4">
+                <button onclick="hideImportModal()" id="ui-import-cancel-btn" class="px-4 py-2 text-sm font-bold text-gray-400 hover:text-white rounded-lg transition-colors">Cancelar</button>
+                <button onclick="importPreset()" id="ui-import-btn" class="px-4 py-2 text-sm font-bold bg-gameOrange text-black rounded-lg hover:bg-orange-600 transition-colors">Importar</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="mt-16 text-center text-xs text-gray-500 max-w-7xl mx-auto px-6 py-8 border-t border-gray-900">
         <p id="ui-footer-text">Planner interactivo. El progreso se guarda en tu navegador.</p>
     </footer>
 
     <!-- Scripts en orden de dependencia -->
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>

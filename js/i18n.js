@@ -27,6 +27,31 @@ const translations = {
         ui_bonus: "Bonus:",
         ui_swap: "Intercambiar atributos",
         stat_empty: "— Seleccionar —",
+        ui_equipped: "Mi Gear",
+        ui_target: "Deseado",
+        ui_bis_match: "BiS Match",
+        ui_no_match: "No Coincide",
+        ui_no_rare_attr: "Sin Atributo Raro",
+        ui_select_spec: "— Seleccionar Spec —",
+        ui_spec_stats: "Atributos:",
+        ui_set_pieces: "Piezas del set:",
+        ui_active: "Activo",
+        ui_set_effects: "Efectos de Conjunto",
+        ui_raid_sets_panel_title: "🛡️ Sets de Raid Activos",
+        ui_no_active_sets: "No tienes ningún set de Raid activo (mínimo 2 piezas).",
+        ui_spec_label: "Spec:",
+        ui_recommended: "⭐ Recomendado",
+        ui_share: "Compartir",
+        ui_import: "Importar",
+        ui_import_title: "Importar Gear Planner",
+        ui_import_desc: "Pega el código compartido para crear un nuevo personaje.",
+        ui_import_placeholder: "Pega el código aquí...",
+        ui_import_cancel: "Cancelar",
+        ui_import_btn: "Importar",
+        ui_share_success: "¡Código copiado al portapapeles!",
+        ui_share_error: "Error al copiar. Código en consola (F12).",
+        ui_import_error: "Código inválido o corrupto.",
+        ui_import_name: "Importado",
         
         // Atributos Base
         stat_versatilidad: "Versatilidad",
@@ -139,7 +164,32 @@ const translations = {
         ui_bonus: "Bonus:",
         ui_swap: "Swap attributes",
         stat_empty: "— Select —",
-
+        ui_equipped: "My Gear",
+        ui_target: "Desired",
+        ui_bis_match: "BiS Match",
+        ui_no_match: "No Match",
+        ui_no_rare_attr: "No Rare Attribute",
+        ui_select_spec: "— Select Spec —",
+        ui_spec_stats: "Attributes:",
+        ui_set_pieces: "Set pieces:",
+        ui_active: "Active",
+        ui_set_effects: "Set Effects",
+        ui_raid_sets_panel_title: "🛡️ Active Raid Sets",
+        ui_no_active_sets: "You have no active Raid sets (minimum 2 pieces).",
+        ui_spec_label: "Spec:",
+        ui_recommended: "⭐ Recommended",
+        ui_share: "Share",
+        ui_import: "Import",
+        ui_import_title: "Import Gear Planner",
+        ui_import_desc: "Paste the shared code to create a new character.",
+        ui_import_placeholder: "Paste code here...",
+        ui_import_cancel: "Cancel",
+        ui_import_btn: "Import",
+        ui_share_success: "Code copied to clipboard!",
+        ui_share_error: "Copy failed. Check console (F12).",
+        ui_import_error: "Invalid or corrupted code.",
+        ui_import_name: "Imported",
+        
         // Base Stats
         stat_versatilidad: "Versatility",
         stat_maestria: "Mastery",
@@ -245,6 +295,8 @@ window.changeLanguage = function(lang) {
     
     // Actualizar textos estáticos del Header
     document.getElementById('ui-build-label').innerText = t('ui_build');
+    const specLabelEl = document.getElementById('ui-spec-label');
+    if (specLabelEl) specLabelEl.innerText = t('ui_spec_label');
     document.getElementById('ui-bis-label').innerText = t('ui_bis');
     document.getElementById('ui-sigils-label').innerText = t('ui_sigils');
     document.getElementById('ui-reset-btn').innerText = t('ui_reset');
@@ -263,6 +315,23 @@ window.changeLanguage = function(lang) {
     
     const deleteBtn = document.getElementById('ui-delete-preset-btn');
     if (deleteBtn) deleteBtn.title = t('ui_delete_preset_tooltip');
+    
+    const shareBtn = document.getElementById('ui-share-preset-btn');
+    if (shareBtn) shareBtn.title = t('ui_share');
+    const importBtn = document.getElementById('ui-import-preset-btn');
+    if (importBtn) importBtn.title = t('ui_import');
+    
+    const importTitle = document.getElementById('ui-import-title');
+    if (importTitle) importTitle.innerText = t('ui_import_title');
+    const importDesc = document.getElementById('ui-import-desc');
+    if (importDesc) importDesc.innerText = t('ui_import_desc');
+    const importTextarea = document.getElementById('import-textarea');
+    if (importTextarea) importTextarea.placeholder = t('ui_import_placeholder');
+    const importCancelBtn = document.getElementById('ui-import-cancel-btn');
+    if (importCancelBtn) importCancelBtn.innerText = t('ui_import_cancel');
+    const importBtnEl = document.getElementById('ui-import-btn');
+    if (importBtnEl) importBtnEl.innerText = t('ui_import_btn');
+
     document.getElementById('opt-strength').innerText = currentLang === 'es' ? 'Fuerza' : 'Strength';
     document.getElementById('opt-intelligence').innerText = currentLang === 'es' ? 'Inteligencia' : 'Intelligence';
     document.getElementById('opt-agility').innerText = currentLang === 'es' ? 'Agilidad' : 'Agility';
