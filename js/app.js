@@ -813,6 +813,7 @@ window.renderPlanner = function() {
                                             <span class="font-extrabold text-gameGold">${currentLang === 'es' ? currentSpecData.stats.es : currentSpecData.stats.en}</span>
                                         </div>
 
+                                        ${gear.id !== 'weapon' ? `
                                         <!-- Info del Set de la tarjeta -->
                                         <div class="p-2 px-3 rounded-xl border border-gray-800 bg-gray-950/40 space-y-2 text-[11px]">
                                             <div class="flex justify-between items-center border-b border-gray-900/60 pb-1">
@@ -838,6 +839,7 @@ window.renderPlanner = function() {
                                                 <p class="text-[9px] leading-relaxed pl-2.5">${currentLang === 'es' ? currentSpecData.effects.es.piece4 : currentSpecData.effects.en.piece4}</p>
                                             </div>
                                         </div>
+                                        ` : ''}
                                     ` : `
                                         <!-- Placeholder sin Spec -->
                                         <div class="p-4 rounded-xl border border-dashed border-gray-800 bg-gray-950/40 flex flex-col items-center justify-center text-center gap-1.5 flex-grow">
