@@ -677,10 +677,17 @@ window.renderPlanner = function() {
         }
 
         const qualityColors = {
-            'Rare': '#60a5fa',       // azul para raro
-            'Epic': '#a855f7',       // morado para epic
-            'Legendary': '#eab308',  // dorado para legendary
-            'Mythic': '#f97316'      // rojo-naranja mythic
+            'Rare': '#60a5fa',
+            'Epic': '#a855f7',
+            'Legendary': '#eab308',
+            'Mythic': '#f97316'
+        };
+
+        const qualityBgImages = {
+            'Rare': 'source/quality/rare.png',
+            'Epic': 'source/quality/epic.png',
+            'Legendary': 'source/quality/Legendary.png',
+            'Mythic': 'source/quality/Mythic.png'
         };
 
         const currentSigil = sigilData.find(s => s.id === state.sigil) || { id: 'none', nameKey: 'sigil_none', stat: '—', image: '' };
@@ -701,7 +708,9 @@ window.renderPlanner = function() {
             return `
                 <div onclick="updateSigil('${gear.id}', '${sigil.id}')" class="flex items-center justify-between gap-2.5 px-3 py-2 hover:bg-gray-800/80 cursor-pointer text-xs font-bold select-none" style="color: ${color};">
                     <div class="flex items-center gap-2.5 min-w-0">
-                        <img src="${sigil.image}" class="w-5 h-5 object-contain rounded bg-gray-950 border border-gray-800 flex-shrink-0" onerror="this.src='https://via.placeholder.com/20'">
+                        <div class="w-5 h-5 rounded flex-shrink-0 overflow-hidden bg-gray-950 border border-gray-800" style="background-image: url('${qualityBgImages[sigil.quality] || ''}'); background-size: cover; background-position: center;">
+                            <img src="${sigil.image}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                        </div>
                         <span class="truncate">${t(sigil.nameKey)}</span>
                     </div>
                     <span class="text-[10px] text-gray-400 font-mono flex-shrink-0 ml-auto pl-2">${statsText}</span>
@@ -765,8 +774,8 @@ window.renderPlanner = function() {
                 <div class="p-4 grid grid-cols-12 gap-4 flex-grow relative z-10">
                     <!-- Imagen -->
                     <div class="col-span-4 flex flex-col items-center">
-                        <div class="relative w-28 h-28 border rounded-xl overflow-hidden flex items-center justify-center mx-auto ${imgClass}">
-                            <img src="${gear.image}" class="w-[90%] h-[90%] object-contain" onerror="this.src='https://via.placeholder.com/80'">
+                        <div class="relative w-28 h-28 border rounded-xl overflow-hidden flex items-center justify-center mx-auto ${imgClass}" style="background-image: url('${state.raid ? 'source/quality/Mythic.png' : 'source/quality/Legendary.png'}'); background-size: cover; background-position: center;">
+                            <img src="${gear.image}" class="w-[90%] h-[90%] object-contain relative z-10" onerror="this.src='https://via.placeholder.com/80'">
                         </div>
                         ${raidEligible ? `
                         <div class="mt-3 flex items-center justify-center gap-2 bg-gray-900/80 px-2 py-1.5 rounded-lg border border-gray-800 w-full">
@@ -779,9 +788,10 @@ window.renderPlanner = function() {
                         </div>
                         ` : ''}
                         <!-- Espacio vacío debajo del switch Raid para mostrar el sigilo grande -->
-                        <div class="mt-3 w-28 h-28 flex flex-col items-center justify-center border border-dashed border-gray-800 rounded-xl p-2 bg-gray-950/40 relative overflow-visible mx-auto">
+                        <div class="mt-3 w-28 h-28 flex flex-col items-center justify-center border border-dashed border-gray-800 rounded-xl p-2 bg-gray-950/40 relative overflow-hidden mx-auto">
                             ${state.sigil !== 'none' && currentSigil.image ? `
-                                <img src="${currentSigil.image}" class="absolute w-28 h-28 object-contain rounded hover:scale-110 transition-all duration-200 z-10" title="${t(currentSigil.nameKey)}">
+                                <div class="absolute inset-0 w-full h-full" style="background-image: url('${qualityBgImages[currentSigil.quality] || ''}'); background-size: cover; background-position: center;"></div>
+                                <img src="${currentSigil.image}" class="absolute w-28 h-28 object-contain hover:scale-110 transition-all duration-200 z-10" title="${t(currentSigil.nameKey)}">
                             ` : `
                                 <span class="text-[9px] text-gray-600 font-bold uppercase tracking-wider text-center">${t('sigil_none')}</span>
                             `}
@@ -874,14 +884,14 @@ window.renderPlanner = function() {
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_equipped')}</span>
                                         <div class="flex items-center gap-1">
-                                            <img src="${statIconMap[state.primary] || ''}" class="w-4 h-4 rounded flex-shrink-0">
+                                            ${state.primary ? `<img src="${statIconMap[state.primary]}" class="w-4 h-4 rounded flex-shrink-0">` : `<div class="w-4 h-4 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[8px] text-gray-600 font-bold">—</div>`}
                                             <select onchange="updateStat('${gear.id}', 'primary', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.primaryChecked ? 'text-white border-gameOrange/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameOrange cursor-pointer">${primOptions}</select>
                                         </div>
                                     </div>
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_target')}</span>
                                         <div class="flex items-center gap-1">
-                                            <img src="${statIconMap[state.primaryDesired] || ''}" class="w-4 h-4 rounded flex-shrink-0">
+                                            ${state.primaryDesired ? `<img src="${statIconMap[state.primaryDesired]}" class="w-4 h-4 rounded flex-shrink-0">` : `<div class="w-4 h-4 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[8px] text-gray-600 font-bold">—</div>`}
                                             <select onchange="updateStat('${gear.id}', 'primaryDesired', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.primaryChecked ? 'text-white border-gameOrange/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameOrange cursor-pointer">${primDesiredOptions}</select>
                                         </div>
                                     </div>
@@ -916,14 +926,14 @@ window.renderPlanner = function() {
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_equipped')}</span>
                                         <div class="flex items-center gap-1">
-                                            <img src="${statIconMap[state.secondary] || ''}" class="w-4 h-4 rounded flex-shrink-0">
+                                            ${state.secondary ? `<img src="${statIconMap[state.secondary]}" class="w-4 h-4 rounded flex-shrink-0">` : `<div class="w-4 h-4 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[8px] text-gray-600 font-bold">—</div>`}
                                             <select onchange="updateStat('${gear.id}', 'secondary', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.secondaryChecked ? 'text-white border-gameGold/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameGold cursor-pointer">${secOptions}</select>
                                         </div>
                                     </div>
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_target')}</span>
                                         <div class="flex items-center gap-1">
-                                            <img src="${statIconMap[state.secondaryDesired] || ''}" class="w-4 h-4 rounded flex-shrink-0">
+                                            ${state.secondaryDesired ? `<img src="${statIconMap[state.secondaryDesired]}" class="w-4 h-4 rounded flex-shrink-0">` : `<div class="w-4 h-4 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[8px] text-gray-600 font-bold">—</div>`}
                                             <select onchange="updateStat('${gear.id}', 'secondaryDesired', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.secondaryChecked ? 'text-white border-gameGold/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gameGold cursor-pointer">${secDesiredOptions}</select>
                                         </div>
                                     </div>
@@ -973,7 +983,9 @@ window.renderPlanner = function() {
                         <button onclick="event.stopPropagation(); toggleCustomDropdown('dropdown-${gear.id}')" style="color: ${sigilColor}; border-color: ${state.sigil === 'none' ? '#1f2937' : sigilColor};" class="w-full bg-gray-900 border text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer flex items-center justify-between gap-1.5 select-none min-h-[32px]">
                             <div class="flex items-center gap-1.5 min-w-0 truncate">
                                 ${currentSigil.image ? `
-                                    <img src="${currentSigil.image}" class="w-5 h-5 object-contain rounded flex-shrink-0 bg-gray-950 border border-gray-800">
+                                    <div class="w-5 h-5 rounded flex-shrink-0 overflow-hidden bg-gray-950 border border-gray-800" style="background-image: url('${qualityBgImages[currentSigil.quality] || ''}'); background-size: cover; background-position: center;">
+                                        <img src="${currentSigil.image}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                                    </div>
                                 ` : `
                                     <div class="w-5 h-5 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[10px] text-gray-600 font-bold">—</div>
                                 `}
