@@ -405,7 +405,7 @@ function validateGearStats(gearId) {
 
     const lvl = state.level || 'Lv220';
     const rareOpts = (rareStatsData[lvl] && rareStatsData[lvl][build] && rareStatsData[lvl][build][gearId]) || [];
-    if (!rareOpts.includes(state.rare)) state.rare = rareOpts[0] || '';
+    if (state.rare && !rareOpts.includes(state.rare)) state.rare = '';
     if (state.rareDesired && !rareOpts.includes(state.rareDesired)) state.rareDesired = '';
 
     if (state.sigil && state.sigil !== 'none' && !isSigilAllowedForGear(state.sigil, gearId)) {
@@ -734,8 +734,10 @@ window.renderPlanner = function() {
 
         const lvl = state.level || 'Lv220';
         const rareOpts = (rareStatsData[lvl] && rareStatsData[lvl][activeBuild] && rareStatsData[lvl][activeBuild][gear.id]) || [];
-        const rareOptionsHTML = rareOpts.map(opt => `<option value="${opt}" ${state.rare === opt ? 'selected' : ''}>${opt}</option>`).join('');
-        const rareDesiredOptionsHTML = rareOpts.map(opt => `<option value="${opt}" ${state.rareDesired === opt ? 'selected' : ''}>${opt}</option>`).join('');
+        const emptyRareOption = `<option value="" ${!state.rare ? 'selected' : ''}>${t('stat_empty')}</option>`;
+        const emptyRareDesiredOption = `<option value="" ${!state.rareDesired ? 'selected' : ''}>${t('stat_empty')}</option>`;
+        const rareOptionsHTML = emptyRareOption + rareOpts.map(opt => `<option value="${opt}" ${state.rare === opt ? 'selected' : ''}>${opt}</option>`).join('');
+        const rareDesiredOptionsHTML = emptyRareDesiredOption + rareOpts.map(opt => `<option value="${opt}" ${state.rareDesired === opt ? 'selected' : ''}>${opt}</option>`).join('');
         const levelOptions = ['Lv220', 'Lv240', 'Lv260'].map(lvl => `<option value="${lvl}" ${state.level === lvl ? 'selected' : ''} class="level-selector-option">${lvl}</option>`).join('');
 
         const raidEligible = ['head', 'armor', 'guante', 'bota', 'brazaleteR', 'brazaleteL', 'weapon'].includes(gear.id);
@@ -960,14 +962,14 @@ window.renderPlanner = function() {
                                 <div class="grid grid-cols-2 gap-2 mt-1">
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_equipped')}</span>
-                                        ${rareOpts.length > 1 ? 
+                                        ${rareOpts.length > 0 ? 
                                             `<select onchange="updateStat('${gear.id}', 'rare', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.rareChecked ? 'text-white border-gamePurple/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gamePurple cursor-pointer">${rareOptionsHTML}</select>` : 
-                                            `<div class="w-full bg-gray-950 border border-gray-700 text-gray-400 text-xs font-mono rounded-lg px-1.5 py-1.5 text-center truncate">${state.rare}</div>`
+                                            `<div class="w-full bg-gray-950 border border-gray-700 text-gray-400 text-xs font-mono rounded-lg px-1.5 py-1.5 text-center truncate">${state.rare || '—'}</div>`
                                         }
                                     </div>
                                     <div>
                                         <span class="text-[8px] uppercase font-bold text-gray-500 block mb-0.5 tracking-wider">${t('ui_target')}</span>
-                                        ${rareOpts.length > 1 ? 
+                                        ${rareOpts.length > 0 ? 
                                             `<select onchange="updateStat('${gear.id}', 'rareDesired', this.value)" class="w-full bg-gray-950 border border-gray-700 ${state.rareChecked ? 'text-white border-gamePurple/50' : 'text-gray-400'} text-xs rounded-lg px-1.5 py-1 focus:outline-none focus:border-gamePurple cursor-pointer">${rareDesiredOptionsHTML}</select>` : 
                                             `<div class="w-full bg-gray-950 border border-gray-700 text-gray-400 text-xs font-mono rounded-lg px-1.5 py-1.5 text-center truncate">${state.rare || '—'}</div>`
                                         }
