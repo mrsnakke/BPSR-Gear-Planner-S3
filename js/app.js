@@ -217,6 +217,7 @@ window.selectSpecOption = function(specId) {
 };
 
 window.toggleRaid = function(id, isRaid) { plannerState[id].raid = isRaid; saveAndRefresh(); };
+window.toggleObtained = function(id, isObtained) { if (!plannerState[id]) return; plannerState[id].obtained = isObtained; saveAndRefresh(); };
 window.updateSpec = function(id, val) { if (plannerState[id]) { plannerState[id].spec = val; } saveAndRefresh(); };
 window.toggleStatCheck = function(id, field, val) { plannerState[id][field] = val; saveAndRefresh(); };
 window.updateLevel = function(id, val) { plannerState[id].level = val; saveAndRefresh(); };
@@ -414,16 +415,14 @@ function validateGearStats(gearId) {
 }
 
 function updateGlobalStats() {
-    let bisCount = 0, sigilCount = 0;
+    let bisCount = 0;
     gearData.forEach(gear => {
         const state = plannerState[gear.id];
         if (state) {
-            if (state.primaryChecked && state.secondaryChecked && (state.raid ? true : state.rareChecked) && state.sigil !== 'none') bisCount++;
-            if (state.sigil !== 'none') sigilCount++;
+            if (state.primaryChecked && state.secondaryChecked && (state.raid ? true : state.rareChecked) && state.sigil !== 'none' && state.obtained) bisCount++;
         }
     });
     document.getElementById('global-progress').innerText = `${bisCount}/${gearData.length}`;
-    document.getElementById('global-sigils').innerText = sigilCount;
 }
 
 // ====== FUNCIONES DE RAID SPEC ======
@@ -500,6 +499,7 @@ window.renderPlanner = function() {
         if (!plannerState[gear.id]) {
             plannerState[gear.id] = { obtained: false, primary: '', primaryDesired: '', primaryChecked: false, secondary: '', secondaryDesired: '', secondaryChecked: false, rare: '', rareDesired: '', rareChecked: false, level: 'Lv220', bgColor: 'dorado', sigil: 'none', raid: false, spec: '' };
         } else {
+            if (plannerState[gear.id].obtained === undefined) plannerState[gear.id].obtained = false;
             if (plannerState[gear.id].primaryDesired === undefined) plannerState[gear.id].primaryDesired = '';
             if (plannerState[gear.id].secondaryDesired === undefined) plannerState[gear.id].secondaryDesired = '';
             if (plannerState[gear.id].rareDesired === undefined) plannerState[gear.id].rareDesired = '';
@@ -616,7 +616,7 @@ window.renderPlanner = function() {
     gearData.forEach(gear => {
         const state = plannerState[gear.id];
         const rareOk = state.raid ? true : state.rareChecked;
-        const isBiS = state.primaryChecked && state.secondaryChecked && rareOk && state.sigil !== 'none';
+        const isBiS = state.primaryChecked && state.secondaryChecked && rareOk && state.sigil !== 'none' && state.obtained;
         const gearDungeon = dungeonData.find(d => d.drops.includes(gear.id));
 
         let imgClass = (state.raid || state.bgColor === 'naranja-rojo')
@@ -936,34 +936,42 @@ window.renderPlanner = function() {
                     </div>
                 </div>
 
-                <div class="px-4 py-2 bg-gray-950/60 border-t border-gray-900 flex justify-between items-center gap-2 relative z-10">
-                    <div class="relative w-1/2">
-                        <button onclick="event.stopPropagation(); toggleCustomDropdown('dropdown-${gear.id}')" style="color: ${sigilColor}; border-color: ${state.sigil === 'none' ? '#1f2937' : sigilColor};" class="w-full bg-gray-900 border text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer flex items-center justify-between gap-1.5 select-none min-h-[32px]">
-                            <div class="flex items-center gap-1.5 min-w-0 truncate">
-                                ${currentSigil.image ? `
-                                    <div class="w-5 h-5 rounded flex-shrink-0 overflow-hidden bg-gray-950 border border-gray-800" style="background-image: url('${qualityBgImages[currentSigil.quality] || ''}'); background-size: cover; background-position: center;">
-                                        <img src="${currentSigil.image}" class="w-full h-full object-contain" onerror="this.style.display='none'">
-                                    </div>
-                                ` : `
-                                    <div class="w-5 h-5 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[10px] text-gray-600 font-bold">—</div>
-                                `}
-                                <span class="truncate">${t(currentSigil.nameKey)}</span>
+                <div class="px-4 py-2 bg-gray-950/60 border-t border-gray-900 flex justify-between items-center gap-1 relative z-10">
+                    <div class="flex items-center gap-1 flex-1 min-w-0">
+                        <div class="relative w-36 flex-shrink-0">
+                            <button onclick="event.stopPropagation(); toggleCustomDropdown('dropdown-${gear.id}')" style="color: ${sigilColor}; border-color: ${state.sigil === 'none' ? '#1f2937' : sigilColor};" class="w-full bg-gray-900 border text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer flex items-center justify-between gap-1.5 select-none min-h-[32px]">
+                                <div class="flex items-center gap-1.5 min-w-0 truncate">
+                                    ${currentSigil.image ? `
+                                        <div class="w-5 h-5 rounded flex-shrink-0 overflow-hidden bg-gray-950 border border-gray-800" style="background-image: url('${qualityBgImages[currentSigil.quality] || ''}'); background-size: cover; background-position: center;">
+                                            <img src="${currentSigil.image}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                                        </div>
+                                    ` : `
+                                        <div class="w-5 h-5 rounded flex-shrink-0 bg-gray-950/30 border border-gray-800 flex items-center justify-center text-[10px] text-gray-600 font-bold">—</div>
+                                    `}
+                                    <span class="truncate">${t(currentSigil.nameKey)}</span>
+                                </div>
+                                <svg class="w-3 h-3 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div id="dropdown-${gear.id}" class="hidden absolute z-50 bottom-full mb-1 left-0 w-[180%] max-w-[340px] max-h-60 overflow-y-auto bg-gray-950 border border-gray-800 rounded-lg shadow-2xl divide-y divide-gray-900/60 custom-scrollbar scrollbar-thin">
+                                ${dropdownItemsHTML}
                             </div>
-                            <svg class="w-3 h-3 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <div id="dropdown-${gear.id}" class="hidden absolute z-50 bottom-full mb-1 left-0 w-[180%] max-w-[340px] max-h-60 overflow-y-auto bg-gray-950 border border-gray-800 rounded-lg shadow-2xl divide-y divide-gray-900/60 custom-scrollbar scrollbar-thin">
-                            ${dropdownItemsHTML}
                         </div>
+                        <label class="relative inline-flex items-center cursor-pointer flex-shrink-0" title="${state.obtained ? t('ui_equipped') : t('ui_not_equipped')}">
+                            <input type="checkbox" class="sr-only peer" ${state.obtained ? 'checked' : ''} onchange="toggleObtained('${gear.id}', this.checked)">
+                            <div class="w-5 h-3.5 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
                     </div>
-                    <span class="text-[10px] text-gray-500 font-mono truncate w-1/2 text-right" title="${currentSigil.stat2 ? `${currentSigil.stat} / ${currentSigil.stat2}` : (currentSigil.stat || '')}">
+                    <span class="text-[10px] text-gray-500 font-mono truncate flex-shrink-0 ml-1 text-right" title="${currentSigil.stat2 ? `${currentSigil.stat} / ${currentSigil.stat2}` : (currentSigil.stat || '')}">
                         ${t('ui_bonus')} <span class="text-gray-300">${currentSigil.stat || ''}${currentSigil.stat2 ? ` / ${currentSigil.stat2}` : ''}</span>
                     </span>
                 </div>`;
                 
         grid.innerHTML += cardHTML;
     });
+
+    updateGlobalStats();
 
     // Auto-ajustar ancho de selectores de nivel (level-selector)
     document.querySelectorAll('.level-selector').forEach(selector => {

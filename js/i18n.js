@@ -24,6 +24,7 @@ const translations = {
         ui_swap: "Intercambiar atributos",
         stat_empty: "— Seleccionar —",
         ui_equipped: "Mi Gear",
+        ui_not_equipped: "No Equipado",
         ui_target: "Deseado",
         ui_bis_match: "BiS Match",
         ui_no_match: "No Coincide",
@@ -157,6 +158,7 @@ const translations = {
         ui_swap: "Swap attributes",
         stat_empty: "— Select —",
         ui_equipped: "My Gear",
+        ui_not_equipped: "Not Equipped",
         ui_target: "Desired",
         ui_bis_match: "BiS Match",
         ui_no_match: "No Match",
@@ -290,7 +292,6 @@ window.changeLanguage = function(lang) {
     const specLabelEl = document.getElementById('ui-spec-label');
     if (specLabelEl) specLabelEl.innerText = t('ui_spec_label');
     document.getElementById('ui-bis-label').innerText = t('ui_bis');
-    document.getElementById('ui-sigils-label').innerText = t('ui_sigils');
     document.getElementById('ui-reset-btn').innerText = t('ui_reset');
     document.getElementById('ui-inventory-title').innerText = t('ui_inventory');
     document.getElementById('ui-footer-text').innerText = t('ui_footer');
