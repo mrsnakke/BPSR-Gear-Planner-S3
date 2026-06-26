@@ -531,8 +531,8 @@ window.renderPlanner = function() {
             const isSelected = plannerState.spec === s.id;
             return `<div onclick="selectSpecOption('${s.id}')" class="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800/80 cursor-pointer text-xs font-bold select-none ${isSelected ? 'text-gameOrange bg-gameOrange/10' : 'text-gray-300'}">
                 <img src="${s.image}" class="w-5 h-5 rounded object-contain bg-gray-950 border border-gray-800 flex-shrink-0">
-                <span class="truncate">${specName}</span>
-                ${isSelected ? '<span class="ml-auto text-gameGold text-[10px]">✓</span>' : ''}
+                <span>${specName}</span>
+                ${isSelected ? '<span class="ml-auto text-gameGold text-[10px] flex-shrink-0">✓</span>' : ''}
             </div>`;
         }).join('');
         specDropdown.innerHTML = specHTML;
@@ -540,7 +540,9 @@ window.renderPlanner = function() {
     if (specBtnText && specIcon) {
         const currentSpecData = raidSetsData.find(s => s.id === plannerState.spec);
         if (currentSpecData) {
-            specBtnText.textContent = currentLang === 'es' ? currentSpecData.name.es : currentSpecData.name.en;
+            const specName = currentLang === 'es' ? currentSpecData.name.es : currentSpecData.name.en;
+            specBtnText.textContent = specName;
+            specBtnText.title = specName;
             specIcon.src = currentSpecData.image;
             specIcon.classList.remove('hidden');
         } else {
