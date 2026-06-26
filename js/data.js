@@ -506,131 +506,75 @@ const bannedStats = {
     agility: { head: ['presteza'], armor: ['maestria'], guante: ['critico'], bota: ['critico'], arete: ['presteza'], collar: ['maestria'], anillo: ['versatilidad'], brazaleteL: ['versatilidad'], brazaleteR: ['suerte'], amuleto: ['suerte'], weapon: [] }
 };
 
-// Atributos raros por pieza. Nota: Estos se mantienen en string, pero podrías añadirlos a i18n.js en un futuro.
-const rareStatsData = {
-    Lv220: {
-        strength: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 18%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%']
-        },
-        intelligence: {
-            weapon: ['MATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            arete: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            amuleto: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
-        },
-        agility: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
-        }
+const _rareLv220 = {
+    strength: {
+        weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 18%', 'DMG vs Bosses 3.5%'],
+        head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        arete: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
+        collar: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
+        anillo: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
+        brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        amuleto: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%']
     },
-    Lv240: {
-        strength: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 18%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            armor: ['Shield 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            guante: ['Attack Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            bota: ['Movement Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%']
-        },
-        intelligence: {
-            weapon: ['MATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            armor: ['Shield 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            guante: ['Attack Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            bota: ['Movement Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            arete: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            amuleto: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
-        },
-        agility: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            armor: ['Shield 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            guante: ['Attack Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            bota: ['Movement Speed 1%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 5000', 'Armor 320', 'All Elemental Resistance 160'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
-        }
+    intelligence: {
+        weapon: ['MATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
+        head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        arete: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        collar: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        anillo: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        amuleto: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
     },
-    Lv260: {
-        strength: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 18%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            armor: ['Shield 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            guante: ['Attack Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            bota: ['Movement Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Resilience Break Efficiency 9%', 'DMG vs Bosses 2%']
-        },
-        intelligence: {
-            weapon: ['MATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            armor: ['Shield 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            guante: ['Attack Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            bota: ['Movement Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            arete: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            amuleto: ['MATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
-        },
-        agility: {
-            weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Resilience Break Efficiency 7%', 'DMG vs Bosses 3.5%'],
-            head: ['Cast Speed 2%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            armor: ['Shield 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            guante: ['Attack Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            bota: ['Movement Speed 1%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            arete: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            collar: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            anillo: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
-            brazaleteL: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            brazaleteR: ['Healing Output 4%', 'Max HP 6000', 'Armor 400', 'All Elemental Resistance 200'],
-            amuleto: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
+    agility: {
+        weapon: ['ATK 3.5%', 'Attack Speed 3.5%', 'Cast Speed 7%', 'DMG vs Bosses 3.5%'],
+        head: ['Cast Speed 2%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        armor: ['Shield 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        guante: ['Attack Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        bota: ['Movement Speed 1%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        arete: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        collar: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        anillo: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%'],
+        brazaleteL: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        brazaleteR: ['Healing Output 4%', 'Max HP 4000', 'Armor 240', 'All Elemental Resistance 120'],
+        amuleto: ['ATK 2%', 'Attack Speed 2%', 'Cast Speed 4%', 'DMG vs Bosses 2%']
+    }
+};
+
+function _scaleRareStats(base, level) {
+    const s = {
+        Lv240: { hp: '5000', armor: '320', resist: '160' },
+        Lv260: { hp: '6000', armor: '400', resist: '200', iw2: 'Resilience Break Efficiency 7%', aw2: 'Resilience Break Efficiency 7%' }
+    }[level];
+    if (!s) return base;
+    const r = {};
+    for (const b in base) {
+        r[b] = {};
+        for (const slot in base[b]) {
+            r[b][slot] = base[b][slot].map(v => {
+                if (v.startsWith('Max HP')) return `Max HP ${s.hp}`;
+                if (v.startsWith('Armor ')) return `Armor ${s.armor}`;
+                if (v.startsWith('All Elemental Resistance')) return `All Elemental Resistance ${s.resist}`;
+                return v;
+            });
         }
     }
+    if (s.iw2) r.intelligence.weapon[2] = s.iw2;
+    if (s.aw2) r.agility.weapon[2] = s.aw2;
+    return r;
+}
+
+const rareStatsData = {
+    Lv220: _rareLv220,
+    Lv240: _scaleRareStats(_rareLv220, 'Lv240'),
+    Lv260: _scaleRareStats(_rareLv220, 'Lv260')
 };
 
 // Base de datos de Sets de Raid

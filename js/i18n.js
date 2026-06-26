@@ -74,68 +74,7 @@ const translations = {
         gear_amuleto: "Amuleto",
 
         // Sigilos
-        sigil_none: "Sin Sigilo",
-        sigil_cabbage_killer: "Cabbage Killer Sigil",
-        sigil_wasteland_foxen: "Wasteland Foxen Sigil",
-        sigil_cabbage_tough_guy: "Cabbage Tough Guy Sigil",
-        sigil_glimmer_caprahorn: "Glimmer Caprahorn Sigil",
-        sigil_cabbage_blaster: "Cabbage Blaster Sigil",
-        sigil_nether_caprahorn: "Nether Caprahorn Sigil",
-        sigil_cabbage_hunter: "Cabbage Hunter Sigil",
-        sigil_foxen: "Foxen Sigil",
-        sigil_frost_lizard: "Frost Lizard Sigil",
-        sigil_magma_lizard: "Magma Lizard Sigil",
-        sigil_gale_lizard: "Gale Lizard Sigil",
-        sigil_lightning_lizard: "Lightning Lizard Sigil",
-        sigil_blackstone_marksman: "Blackstone Marksman Sigil",
-        sigil_blackstone_guard: "Blackstone Guard Sigil",
-        sigil_blackstone_warrior: "Blackstone Warrior Sigil",
-        sigil_blackstone_assaulter: "Blackstone Assaulter Sigil",
-        sigil_goblin_warrior: "Goblin Warrior Sigil",
-        sigil_goblin_axeman: "Goblin Axeman Sigil",
-        sigil_goblin_priest: "Goblin Priest Sigil",
-        sigil_goblin_sentry: "Goblin Sentry Sigil",
-        sigil_bluespine_lizard: "Bluespine Lizard Sigil",
-        sigil_emerald_caprahorn: "Emerald Caprahorn Sigil",
-        sigil_blackstone_commander: "Blackstone Commander Sigil",
-        sigil_blackfire_foxen: "Blackfire Foxen Sigil",
-        sigil_gloomy_cabbage: "Gloomy Cabbage Sigil",
-        sigil_blackstone_vanguard: "Blackstone Vanguard Sigil",
-        sigil_ruthless_cabbage: "Ruthless Cabbage Sigil",
-        sigil_goblin_trickster: "Goblin Trickster Sigil",
-        sigil_goblin_shaman: "Goblin Shaman Sigil",
-        sigil_basilisk: "Basilisk Sigil",
-        sigil_goblin_chief: "Goblin Chief Sigil",
-        sigil_crimson_foxen: "Crimson Foxen Sigil",
-        sigil_cabbage_kingpin: "Cabbage Kingpin Sigil",
-        sigil_blackstone_captain: "Blackstone Captain Sigil",
-        sigil_flamehorn: "Flamehorn Sigil",
-        sigil_caprahorn_bloom_steel: "Caprahorn - Bloom & Steel Sigil",
-        sigil_withered_bloomshard: "Withered Bloomshard Sigil",
-        sigil_erosion_bloom_afterimage: "Erosion Bloom Afterimage Sigil",
-        sigil_infernal_arachnocrab: "Infernal Arachnocrab Sigil",
-        sigil_wasteland_arachnocrab: "Wasteland Arachnocrab Sigil",
-        sigil_sandstone_yeti: "Sandstone Yeti Sigil",
-        sigil_ashen_yeti: "Ashen Yeti Sigil",
-        sigil_wild_mountain_boar: "Wild Mountain Boar Sigil",
-        sigil_hunter_mountain_boar: "Hunter Mountain Boar Sigil",
-        sigil_gnashing_furball: "Gnashing Furball Sigil",
-        sigil_spiky_furball: "Spiky Furball Sigil",
-        sigil_patrolling_oculoid: "Patrolling Oculoid Sigil",
-        sigil_mechcore_oculoid: "Mechcore Oculoid Sigil",
-        sigil_killer_arachnocrab: "Killer Arachnocrab Sigil",
-        sigil_dogorman: "Dogorman Sigil",
-        sigil_verdant_fang: "Verdant Fang Sigil",
-        sigil_man_eating_furball: "Man-Eating Furball Sigil",
-        sigil_sanctuary_eye: "Sanctuary Eye Sigil",
-        sigil_predator_arachnocrab: "Predator Arachnocrab Sigil",
-        sigil_rebel_king: "Rebel King Sigil",
-        sigil_ridge_fang: "Ridge Fang Sigil",
-        sigil_bloodthirsty_furball: "Bloodthirsty Furball Sigil",
-        sigil_void_watcher: "Void Watcher Sigil",
-        sigil_paradox_calamity_remnant_origin: "Paradox-Calamity Remnant - Origin Sigil",
-        sigil_paradox_calamity_remnant_continuation: "Paradox-Calamity Remnant - Continuation Sigil",
-        sigil_paradox_calamity_remnant_final: "Paradox-Calamity Remnant - Final Sigil"
+        sigil_none: "Sin Sigilo"
     },
     en: {
         // Interface
@@ -281,7 +220,7 @@ let currentLang = localStorage.getItem('planner_lang') || 'es';
 
 // Función mágica para traducir. Busca en el diccionario usando una "key"
 function t(key) {
-    return translations[currentLang][key] || key;
+    return translations[currentLang][key] || translations.en[key] || key;
 }
 
 // Función para cambiar idioma desde los botones

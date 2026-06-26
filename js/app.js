@@ -45,7 +45,6 @@ let pendingRaidGearId = null;
 function saveAndRefresh() {
     presets[activePresetName] = plannerState;
     localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
-    localStorage.setItem('checklist_gear_planner_state', JSON.stringify(plannerState));
     renderPlanner();
 }
 
@@ -133,7 +132,7 @@ window.deletePreset = function() {
 window.sharePreset = function() {
     try {
         const json = JSON.stringify(plannerState);
-        const compressed = LZString.compressToBase64(json);
+        const compressed = btoa(json);
         navigator.clipboard.writeText(compressed).then(() => {
             alert(t('ui_share_success'));
         }).catch(() => {
@@ -162,7 +161,7 @@ window.importPreset = function() {
     if (!code) return;
 
     try {
-        const json = LZString.decompressFromBase64(code);
+        const json = atob(code);
         if (!json) throw new Error('Invalid code');
         const state = JSON.parse(json);
         if (typeof state !== 'object' || state === null) throw new Error('Not an object');
