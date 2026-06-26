@@ -40,6 +40,7 @@ if (!activePresetName || !presets[activePresetName]) {
 }
 
 let plannerState = presets[activePresetName] || {};
+let pendingRaidGearId = null;
 
 function saveAndRefresh() {
     presets[activePresetName] = plannerState;
@@ -216,7 +217,64 @@ window.selectSpecOption = function(specId) {
     saveAndRefresh();
 };
 
-window.toggleRaid = function(id, isRaid) { plannerState[id].raid = isRaid; saveAndRefresh(); };
+window.toggleRaid = function(id, isRaid) {
+    if (isRaid && !plannerState.spec) {
+        pendingRaidGearId = id;
+        showRaidSpecModal();
+        return;
+    }
+    plannerState[id].raid = isRaid;
+    saveAndRefresh();
+};
+
+window.showRaidSpecModal = function() {
+    const modal = document.getElementById('raid-spec-modal');
+    const container = document.getElementById('raid-spec-options');
+    const titleEl = document.getElementById('raid-spec-modal-title');
+    const descEl = document.getElementById('raid-spec-modal-desc');
+    const cancelBtn = document.getElementById('raid-spec-cancel-btn');
+    if (titleEl) titleEl.textContent = t('ui_raid_spec_modal_title');
+    if (descEl) descEl.textContent = t('ui_raid_spec_modal_desc');
+    if (cancelBtn) cancelBtn.textContent = t('ui_cancel');
+
+    let html = raidSetsData.map(s => {
+        const specName = currentLang === 'es' ? s.name.es : s.name.en;
+        const specStats = currentLang === 'es' ? s.stats.es : s.stats.en;
+        return `<div onclick="selectRaidSpec('${s.id}')" class="flex items-center gap-3 p-3 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-gray-800/80 hover:border-gameOrange/50 cursor-pointer transition-all duration-200">
+            <img src="${s.image}" class="w-10 h-10 rounded-lg object-contain bg-gray-950 border border-gray-700 flex-shrink-0">
+            <div class="flex flex-col min-w-0">
+                <span class="text-sm font-bold text-gray-200 truncate">${specName}</span>
+                <span class="text-[10px] text-gray-400">${specStats}</span>
+            </div>
+        </div>`;
+    }).join('');
+    container.innerHTML = html;
+    modal.classList.remove('hidden');
+};
+
+window.hideRaidSpecModal = function() {
+    document.getElementById('raid-spec-modal')?.classList.add('hidden');
+};
+
+window.selectRaidSpec = function(specId) {
+    if (pendingRaidGearId) {
+        if (!plannerState.spec) {
+            plannerState.spec = specId;
+        }
+        plannerState[pendingRaidGearId].raid = true;
+        pendingRaidGearId = null;
+        hideRaidSpecModal();
+        saveAndRefresh();
+    }
+};
+
+window.cancelRaidSpecModal = function() {
+    pendingRaidGearId = null;
+    hideRaidSpecModal();
+    // Re-render to revert the checkbox that got toggled by the browser
+    saveAndRefresh();
+};
+
 window.toggleObtained = function(id, isObtained) { if (!plannerState[id]) return; plannerState[id].obtained = isObtained; saveAndRefresh(); };
 window.updateSpec = function(id, val) { if (plannerState[id]) { plannerState[id].spec = val; } saveAndRefresh(); };
 window.toggleStatCheck = function(id, field, val) { plannerState[id][field] = val; saveAndRefresh(); };

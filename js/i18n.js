@@ -49,6 +49,9 @@ const translations = {
         ui_share_error: "Error al copiar. Código en consola (F12).",
         ui_import_error: "Código inválido o corrupto.",
         ui_import_name: "Importado",
+        ui_raid_spec_modal_title: "Seleccionar Especialización de Raid",
+        ui_raid_spec_modal_desc: "Necesitas seleccionar una especialización para usar equipo de Raid.",
+        ui_cancel: "Cancelar",
         
         // Atributos Base
         stat_versatilidad: "Versatilidad",
@@ -183,6 +186,9 @@ const translations = {
         ui_share_error: "Copy failed. Check console (F12).",
         ui_import_error: "Invalid or corrupted code.",
         ui_import_name: "Imported",
+        ui_raid_spec_modal_title: "Select Raid Specialization",
+        ui_raid_spec_modal_desc: "You need to select a specialization to use Raid gear.",
+        ui_cancel: "Cancel",
         
         // Base Stats
         stat_versatilidad: "Versatility",

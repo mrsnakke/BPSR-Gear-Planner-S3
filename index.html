@@ -121,6 +121,18 @@
 
     </main>
 
+    <!-- Modal de Selección de Spec para Raid -->
+    <div id="raid-spec-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onclick="if(event.target===this)cancelRaidSpecModal()">
+        <div class="bg-gray-950 border border-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl mx-4">
+            <h3 id="raid-spec-modal-title" class="text-lg font-bold text-white mb-1">Seleccionar Especialización de Raid</h3>
+            <p id="raid-spec-modal-desc" class="text-xs text-gray-400 mb-4">Necesitas seleccionar una especialización para usar equipo de Raid.</p>
+            <div id="raid-spec-options" class="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto custom-scrollbar scrollbar-thin"></div>
+            <div class="flex justify-end mt-4">
+                <button onclick="cancelRaidSpecModal()" id="raid-spec-cancel-btn" class="px-4 py-2 text-sm font-bold text-gray-400 hover:text-white rounded-lg transition-colors">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Importación -->
     <div id="import-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onclick="if(event.target===this)hideImportModal()">
         <div class="bg-gray-950 border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl mx-4">
