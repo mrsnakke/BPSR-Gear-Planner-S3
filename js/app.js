@@ -521,57 +521,13 @@ window.renderPlanner = function() {
         validateGearStats(gear.id);
     });
 
-    // 1. RENDER PRIORITY PANEL
-    const priorityPanel = document.getElementById('priority-farming-panel');
     const missingGears = gearData.map(gear => {
         const state = plannerState[gear.id];
         const checks = state.raid ? [state.primaryChecked, state.secondaryChecked] : [state.primaryChecked, state.secondaryChecked, state.rareChecked];
         return { gear, state, checkedCount: checks.filter(Boolean).length, maxChecks: state.raid ? 2 : 3 };
     }).filter(item => item.checkedCount < item.maxChecks).sort((a, b) => a.checkedCount - b.checkedCount);
 
-    if (missingGears.length > 0) {
-        let priorityCardsHTML = missingGears.map((item, index) => {
-            const { gear, checkedCount, maxChecks } = item;
-            let badgeClass = checkedCount === 0 ? 'bg-red-950 text-red-400 border-red-800' : checkedCount === 1 ? 'bg-orange-950 text-orange-400 border-orange-800' : 'bg-yellow-950 text-yellow-400 border-yellow-800';
-            let borderClass = checkedCount === 0 ? 'border-red-900/60 hover:border-red-500/50' : checkedCount === 1 ? 'border-orange-900/40 hover:border-orange-500/50' : 'border-yellow-900/40 hover:border-yellow-500/50';
-
-            return `
-                <a href="#card-${gear.id}" class="gaming-card p-3 rounded-xl border ${borderClass} flex items-center gap-3 hover:scale-[1.02] transition-all duration-200">
-                    <div class="relative w-12 h-12 bg-gray-900 border border-gray-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <img src="${gear.image}" class="w-9 h-9 object-contain" onerror="this.src='https://via.placeholder.com/36'">
-                        <div class="absolute -top-1.5 -left-1.5 w-5 h-5 bg-gray-950 border border-gray-800 rounded-full flex items-center justify-center text-[10px] font-bold text-gray-300">#${index + 1}</div>
-                    </div>
-                    <div class="flex-grow min-w-0">
-                        <div class="font-bold text-sm text-white truncate">${t(gear.nameKey)}</div>
-                        <div class="inline-block mt-0.5 text-[10px] px-1.5 py-0.5 rounded border ${badgeClass} font-semibold uppercase tracking-wider">
-                            ${t('ui_missing')} ${maxChecks - checkedCount}
-                        </div>
-                    </div>
-                </a>`;
-        }).join('');
-
-        priorityPanel.innerHTML = `
-            <div class="gaming-card rounded-2xl border border-gray-800 p-5 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 cursor-pointer" onclick="togglePanel('priority-content', 'priority-icon')">
-                    <div class="flex items-center gap-2.5">
-                        <span class="text-xl font-bold tracking-wider uppercase bg-gradient-to-r from-gameOrange to-gameGold bg-clip-text text-transparent">${t('ui_priority_title')}</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="text-[11px] text-gray-400 bg-gray-950 border border-gray-800 px-2.5 py-1 rounded-lg hidden sm:block">${t('ui_priority_subtitle')}</div>
-                        <svg id="priority-icon" class="w-5 h-5 text-gray-400 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                </div>
-                <div id="priority-content" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3.5">${priorityCardsHTML}</div>
-            </div>`;
-    } else {
-        priorityPanel.innerHTML = `
-            <div class="gaming-card rounded-2xl border border-gameGold/50 shadow-gold-glow p-6 text-center bg-gradient-to-br from-gray-950 via-yellow-900/10 to-gray-950">
-                <h2 class="text-2xl font-extrabold text-gameGold mb-2 uppercase tracking-widest">🏆 ${t('ui_completed_epic')} 🏆</h2>
-                <p class="text-gray-300 text-sm">${t('ui_completed_desc')}</p>
-            </div>`;
-    }
-
-    // 2. RENDER DUNGEON PANEL
+    // RENDER DUNGEON PANEL
     const dungeonPanel = document.getElementById('dungeon-efficiency-panel');
     if (missingGears.length > 0) {
         const dungeonList = dungeonData.map(dungeon => {
