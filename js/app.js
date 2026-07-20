@@ -128,11 +128,93 @@ window.deletePreset = function() {
     saveAndRefresh();
 };
 
+// ====== COMPACT BINARY ENCODING ======
+// ponytail: bit-packing encode — ~55 bytes → ~76 chars base64 for a full build
+const _GEAR_IDS = ['armor','anillo','guante','arete','head','collar','brazaleteR','brazaleteL','bota','amuleto','weapon'];
+const _E = {
+    build: ['strength','intelligence','agility'],
+    spec: ['','shield','recovery','iaido_slash','moonstrike','icicle','frostbeam','vanguard','skyward','smite','lifebind','earthfort','block','wildpack','falconry','dissonance','concerto','formless','crimson'],
+    substat: ['','versatilidad','maestria','presteza','critico','suerte'],
+    rare: ['','ATK 3.5%','ATK 2%','MATK 3.5%','MATK 2%','Attack Speed 3.5%','Attack Speed 2%','Attack Speed 1%','Cast Speed 7%','Cast Speed 4%','Cast Speed 2%','Resilience Break Efficiency 18%','Resilience Break Efficiency 9%','DMG vs Bosses 3.5%','DMG vs Bosses 2%','Max HP 4000','Armor 240','All Elemental Resistance 120','Shield 4%','Movement Speed 1%','Healing Output 4%','Max HP 5000','Armor 320','All Elemental Resistance 160','Max HP 6000','Armor 400','All Elemental Resistance 200','Resilience Break Efficiency 7%'],
+    level: ['Lv220','Lv240','Lv260'],
+    bgColor: ['dorado','naranja-rojo'],
+    sigil: ['none','cabbageKiller','wastelandFoxen','cabbageToughGuy','glimmerCaprahorn','cabbageBlaster','netherCaprahorn','cabbageHunter','foxen','frostLizard','magmaLizard','galeLizard','lightningLizard','blackstoneMarksman','blackstoneGuard','blackstoneWarrior','blackstoneAssaulter','goblinWarrior','goblinAxeman','goblinPriest','goblinSentry','bluespineLizard','emeraldCaprahorn','blackstoneCommander','blackfireFoxen','gloomyCabbage','blackstoneVanguard','ruthlessCabbage','goblinTrickster','goblinShaman','basilisk','goblinChief','crimsonFoxen','cabbageKingpin','blackstoneCaptain','flamehorn','caprahornBloomSteel','witheredBloomshard','erosionBloomAfterimage','infernalArachnocrab','wastelandArachnocrab','sandstoneYeti','ashenYeti','wildMountainBoar','hunterMountainBoar','gnashingFurball','spikyFurball','patrollingOculoid','mechcoreOculoid','killerArachnocrab','dogorman','verdantFang','manEatingFurball','sanctuaryEye','predatorArachnocrab','rebelKing','ridgeFang','bloodthirstyFurball','voidWatcher','paradoxCalamityRemnantOrigin','paradoxCalamityRemnantContinuation','paradoxCalamityRemnantFinal']
+};
+
+function _encodeBuild(state) {
+    const buf = [];
+    let acc = 0, bits = 0;
+    const push = (val, n) => { acc = (acc << n) | val; bits += n; while (bits >= 8) { bits -= 8; buf.push((acc >> bits) & 0xFF); acc &= (1 << bits) - 1; } };
+    const idx = (arr, val) => { const i = arr.indexOf(val); return i >= 0 ? i : 0; };
+
+    push(idx(_E.build, state.build || 'strength'), 2);
+    push(idx(_E.spec, state.spec || ''), 5);
+    push(state.specSet === 2 ? 1 : 0, 1);  // ponytail: reserved for future Set 2
+
+    for (const id of _GEAR_IDS) {
+        const g = state[id];
+        if (!g) { push(0, 1); continue; }
+        push(1, 1);
+        push(g.obtained ? 1 : 0, 1);
+        push(idx(_E.substat, g.primary), 3);
+        push(idx(_E.substat, g.primaryDesired), 3);
+        push(idx(_E.substat, g.secondary), 3);
+        push(idx(_E.substat, g.secondaryDesired), 3);
+        push(idx(_E.rare, g.rare), 5);
+        push(idx(_E.rare, g.rareDesired), 5);
+        push(idx(_E.level, g.level || 'Lv220'), 2);
+        push(idx(_E.bgColor, g.bgColor || 'dorado'), 1);
+        push(idx(_E.sigil, g.sigil || 'none'), 6);
+        push(g.raid ? 1 : 0, 1);
+        push(idx(_E.spec, g.spec || ''), 5);
+    }
+
+    if (bits > 0) push(0, 8 - bits);
+    return btoa(String.fromCharCode(...buf));
+}
+
+function _decodeBuild(code) {
+    const raw = atob(code);
+    const bytes = Uint8Array.from(raw, c => c.charCodeAt(0));
+    let pos = 0, acc = 0, accBits = 0;
+    const pull = (n) => {
+        while (accBits < n) { acc = (acc << 8) | bytes[pos++]; accBits += 8; }
+        accBits -= n;
+        const val = (acc >> accBits) & ((1 << n) - 1);
+        acc &= (1 << accBits) - 1;
+        return val;
+    };
+
+    const state = {};
+    state.build = _E.build[pull(2)] || 'strength';
+    state.spec = _E.spec[pull(5)] || '';
+    const specSetVal = pull(1);
+    state.specSet = specSetVal === 1 ? 2 : 1;
+
+    for (const id of _GEAR_IDS) {
+        if (!pull(1)) continue;
+        state[id] = {
+            obtained: pull(1) === 1,
+            primary: _E.substat[pull(3)],
+            primaryDesired: _E.substat[pull(3)],
+            secondary: _E.substat[pull(3)],
+            secondaryDesired: _E.substat[pull(3)],
+            rare: _E.rare[pull(5)],
+            rareDesired: _E.rare[pull(5)],
+            level: _E.level[pull(2)] || 'Lv220',
+            bgColor: _E.bgColor[pull(1)] || 'dorado',
+            sigil: _E.sigil[pull(6)] || 'none',
+            raid: pull(1) === 1,
+            spec: _E.spec[pull(5)] || ''
+        };
+    }
+    return state;
+}
+
 // ====== COMPARTIR / IMPORTAR ======
 window.sharePreset = function() {
     try {
-        const json = JSON.stringify(plannerState);
-        const compressed = btoa(json);
+        const compressed = _encodeBuild(plannerState);
         navigator.clipboard.writeText(compressed).then(() => {
             alert(t('ui_share_success'));
         }).catch(() => {
@@ -160,29 +242,35 @@ window.importPreset = function() {
     const code = textarea.value.trim();
     if (!code) return;
 
+    let state;
     try {
-        const json = atob(code);
-        if (!json) throw new Error('Invalid code');
-        const state = JSON.parse(json);
-        if (typeof state !== 'object' || state === null) throw new Error('Not an object');
-
-        const keys = Object.keys(presets);
-        let importName = t('ui_import_name');
-        let counter = 1;
-        while (presets[`${importName} ${counter}`]) counter++;
-        importName = `${importName} ${counter}`;
-
-        presets[importName] = state;
-        activePresetName = importName;
-        plannerState = presets[activePresetName];
-        localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
-        localStorage.setItem('checklist_gear_planner_active_preset', activePresetName);
-        hideImportModal();
-        saveAndRefresh();
+        state = _decodeBuild(code);
+        if (!state.build) throw new Error('Invalid binary');
     } catch (e) {
-        console.error(e);
-        alert(t('ui_import_error'));
+        try {
+            const json = atob(code);
+            if (!json || !json.startsWith('{')) throw new Error('Not JSON');
+            state = JSON.parse(json);
+            if (typeof state !== 'object' || state === null) throw new Error('Not an object');
+        } catch (e2) {
+            console.error(e2);
+            alert(t('ui_import_error'));
+            return;
+        }
     }
+
+    let importName = t('ui_import_name');
+    let counter = 1;
+    while (presets[`${importName} ${counter}`]) counter++;
+    importName = `${importName} ${counter}`;
+
+    presets[importName] = state;
+    activePresetName = importName;
+    plannerState = presets[activePresetName];
+    localStorage.setItem('checklist_gear_planner_presets', JSON.stringify(presets));
+    localStorage.setItem('checklist_gear_planner_active_preset', activePresetName);
+    hideImportModal();
+    saveAndRefresh();
 };
 
 // ====== FUNCIONES GLOBALES (Llamadas desde el HTML) ======
