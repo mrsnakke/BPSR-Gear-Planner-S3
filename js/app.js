@@ -129,7 +129,7 @@ window.deletePreset = function() {
 };
 
 // ====== COMPACT BINARY ENCODING ======
-// ponytail: bit-packing encode — ~55 bytes → ~76 chars base64 for a full build
+// ponytail: bit-packing encode — ~54 bytes → ~76 chars base64 for a full build
 const _GEAR_IDS = ['armor','anillo','guante','arete','head','collar','brazaleteR','brazaleteL','bota','amuleto','weapon'];
 const _E = {
     build: ['strength','intelligence','agility'],
@@ -149,13 +149,11 @@ function _encodeBuild(state) {
 
     push(idx(_E.build, state.build || 'strength'), 2);
     push(idx(_E.spec, state.spec || ''), 5);
-    push(state.specSet === 2 ? 1 : 0, 1);  // ponytail: reserved for future Set 2
 
     for (const id of _GEAR_IDS) {
         const g = state[id];
         if (!g) { push(0, 1); continue; }
         push(1, 1);
-        push(g.obtained ? 1 : 0, 1);
         push(idx(_E.substat, g.primary), 3);
         push(idx(_E.substat, g.primaryDesired), 3);
         push(idx(_E.substat, g.secondary), 3);
@@ -166,6 +164,7 @@ function _encodeBuild(state) {
         push(idx(_E.bgColor, g.bgColor || 'dorado'), 1);
         push(idx(_E.sigil, g.sigil || 'none'), 6);
         push(g.raid ? 1 : 0, 1);
+        push(g.specSet === 2 ? 1 : 0, 1);
         push(idx(_E.spec, g.spec || ''), 5);
     }
 
@@ -188,13 +187,11 @@ function _decodeBuild(code) {
     const state = {};
     state.build = _E.build[pull(2)] || 'strength';
     state.spec = _E.spec[pull(5)] || '';
-    const specSetVal = pull(1);
-    state.specSet = specSetVal === 1 ? 2 : 1;
 
     for (const id of _GEAR_IDS) {
         if (!pull(1)) continue;
         state[id] = {
-            obtained: pull(1) === 1,
+            obtained: false,
             primary: _E.substat[pull(3)],
             primaryDesired: _E.substat[pull(3)],
             secondary: _E.substat[pull(3)],
@@ -205,6 +202,7 @@ function _decodeBuild(code) {
             bgColor: _E.bgColor[pull(1)] || 'dorado',
             sigil: _E.sigil[pull(6)] || 'none',
             raid: pull(1) === 1,
+            specSet: pull(1) === 1 ? 2 : 1,
             spec: _E.spec[pull(5)] || ''
         };
     }
@@ -311,6 +309,14 @@ window.toggleRaid = function(id, isRaid) {
         return;
     }
     plannerState[id].raid = isRaid;
+    if (isRaid && !plannerState[id].specSet) plannerState[id].specSet = 1;
+    saveAndRefresh();
+};
+
+window.toggleSpecSet = function(id, targetSet) {
+    if (!plannerState[id]) return;
+    if (plannerState[id].specSet === targetSet) return;
+    plannerState[id].specSet = targetSet;
     saveAndRefresh();
 };
 
@@ -349,6 +355,7 @@ window.selectRaidSpec = function(specId) {
             plannerState.spec = specId;
         }
         plannerState[pendingRaidGearId].raid = true;
+        if (!plannerState[pendingRaidGearId].specSet) plannerState[pendingRaidGearId].specSet = 1;
         pendingRaidGearId = null;
         hideRaidSpecModal();
         saveAndRefresh();
@@ -640,24 +647,27 @@ window.renderPlanner = function() {
     }
 
     // Conteo de specs global en tiempo real para efectos de set (excluye arma)
-    const specCount = {};
+    const setCounts = {};
 
     gearData.forEach(gear => {
         if (!plannerState[gear.id]) {
-            plannerState[gear.id] = { obtained: false, primary: '', primaryDesired: '', primaryChecked: false, secondary: '', secondaryDesired: '', secondaryChecked: false, rare: '', rareDesired: '', rareChecked: false, level: 'Lv220', bgColor: 'dorado', sigil: 'none', raid: false, spec: '' };
+            plannerState[gear.id] = { obtained: false, primary: '', primaryDesired: '', primaryChecked: false, secondary: '', secondaryDesired: '', secondaryChecked: false, rare: '', rareDesired: '', rareChecked: false, level: 'Lv220', bgColor: 'dorado', sigil: 'none', raid: false, spec: '', specSet: 1 };
         } else {
             if (plannerState[gear.id].obtained === undefined) plannerState[gear.id].obtained = false;
             if (plannerState[gear.id].primaryDesired === undefined) plannerState[gear.id].primaryDesired = '';
             if (plannerState[gear.id].secondaryDesired === undefined) plannerState[gear.id].secondaryDesired = '';
             if (plannerState[gear.id].rareDesired === undefined) plannerState[gear.id].rareDesired = '';
             if (plannerState[gear.id].spec === undefined) plannerState[gear.id].spec = '';
+            if (plannerState[gear.id].specSet === undefined) plannerState[gear.id].specSet = 1;
         }
         
         // Auto-detect coincidences
         const state = plannerState[gear.id];
         // Usar spec global, excluir arma del conteo de conjunto
         if (state.raid && plannerState.spec && gear.id !== 'weapon') {
-            specCount[plannerState.spec] = (specCount[plannerState.spec] || 0) + 1;
+            const setKey = state.specSet === 2 ? 'phantom' : 'vc';
+            if (!setCounts[plannerState.spec]) setCounts[plannerState.spec] = { vc: 0, phantom: 0 };
+            setCounts[plannerState.spec][setKey]++;
         }
 
         const hasSpec = !!plannerState.spec;
@@ -743,6 +753,75 @@ window.renderPlanner = function() {
         dungeonPanel.classList.remove('hidden');
     } else {
         dungeonPanel.classList.add('hidden');
+    }
+
+    // RENDER RAID SETS PREVIEW PANEL
+    const raidSetsPanel = document.getElementById('raid-sets-panel');
+    const activeSpecData = plannerState.spec ? raidSetsData.find(s => s.id === plannerState.spec) : null;
+    if (activeSpecData) {
+        const specName = currentLang === 'es' ? activeSpecData.name.es : activeSpecData.name.en;
+        const locale = currentLang === 'es' ? 'es' : 'en';
+
+        const specSetCounts = plannerState.spec && setCounts[plannerState.spec] ? setCounts[plannerState.spec] : { vc: 0, phantom: 0 };
+
+        const setCards = ['vc', 'phantom'].map(key => {
+            const setData = activeSpecData.sets[key];
+            const setIcon = key === 'vc' ? 'source/Sets/Void Corruption.png' : 'source/Sets/Phantom.png';
+            const setName = t('ui_set_' + key);
+            const count = specSetCounts[key];
+            const has2P = count >= 2;
+            const has4P = count >= 4;
+            const anyActive = count > 0;
+            const cardBorder = anyActive ? 'border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.15)]' : 'border-gray-700/60 opacity-60';
+            const nameClass = anyActive ? 'text-emerald-400' : 'text-gray-500';
+
+            return `
+                <div class="gaming-card rounded-2xl border ${cardBorder} relative overflow-hidden" style="min-height: 140px;">
+                    <div class="absolute inset-0 z-0 pointer-events-none">
+                        <img src="source/DG/Forgotten Illusions – Final Mech.webp" class="w-full h-full object-cover object-top opacity-50">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 from-55% to-transparent"></div>
+                    </div>
+
+                    <div class="relative p-4 flex gap-4 z-10">
+                        <div class="flex flex-col items-center gap-1.5 shrink-0">
+                            <span class="text-xs font-extrabold ${nameClass} uppercase tracking-wider">${setName}</span>
+                            <div class="w-[100px] h-[100px] border rounded-xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-orange-500/20 via-red-600/5 to-transparent border-gameOrange/50 shadow-orange-glow" style="background-image: url('source/quality/Mythic.png'); background-size: cover; background-position: center;">
+                                <img src="${setIcon}" class="w-[80%] h-[80%] object-contain relative z-10">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2.5 flex-grow justify-center">
+                            <div class="p-2 rounded-xl border transition-all duration-300 ${has2P ? 'border-emerald-800/60 bg-gray-950/80' : 'border-gray-800/60 bg-gray-950/60'}">
+                                <div class="flex items-center gap-1.5 mb-1">
+                                    <span class="w-1.5 h-1.5 rounded-full ${has2P ? 'bg-emerald-500 animate-pulse' : 'bg-gray-600'}"></span>
+                                    <span class="font-bold ${has2P ? 'text-emerald-400' : 'text-gray-500'} text-[11px] uppercase tracking-wider">2-Piece ${has2P ? `(${t('ui_active')})` : ''}</span>
+                                </div>
+                                <p class="text-[11px] ${has2P ? 'text-emerald-300' : 'text-gray-500'} leading-relaxed font-medium">${setData.effects[locale].piece2}</p>
+                            </div>
+                            <div class="p-2 rounded-xl border transition-all duration-300 ${has4P ? 'border-emerald-800/60 bg-gray-950/80' : 'border-gray-800/60 bg-gray-950/60'}">
+                                <div class="flex items-center gap-1.5 mb-1">
+                                    <span class="w-1.5 h-1.5 rounded-full ${has4P ? 'bg-emerald-500 animate-pulse' : 'bg-gray-600'}"></span>
+                                    <span class="font-bold ${has4P ? 'text-emerald-400' : 'text-gray-500'} text-[11px] uppercase tracking-wider">4-Piece ${has4P ? `(${t('ui_active')})` : ''}</span>
+                                </div>
+                                <p class="text-[11px] ${has4P ? 'text-emerald-300' : 'text-gray-500'} leading-relaxed font-medium">${setData.effects[locale].piece4}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+
+        raidSetsPanel.innerHTML = `
+            <div class="gaming-card rounded-2xl border border-gray-800 p-5 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="${activeSpecData.image}" class="w-8 h-8 rounded-lg object-contain bg-gray-950 border border-gray-700">
+                    <span class="text-xl font-bold uppercase bg-gradient-to-r from-gameOrange to-gameGold bg-clip-text text-transparent">${specName}</span>
+                    <div class="flex-grow h-px bg-gradient-to-r from-gray-800 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">${setCards}</div>
+            </div>`;
+        raidSetsPanel.classList.remove('hidden');
+    } else {
+        raidSetsPanel.classList.add('hidden');
     }
 
 
@@ -908,9 +987,11 @@ window.renderPlanner = function() {
                         ${state.raid ? (() => {
                             const currentSpecId = plannerState.spec || '';
                             const currentSpecData = raidSetsData.find(s => s.id === currentSpecId);
-                            const count = specCount[currentSpecId] || 0;
-                            const has2P = count >= 2;
-                            const has4P = count >= 4;
+                            const setKey = state.specSet === 2 ? 'phantom' : 'vc';
+                            const mySetCount = currentSpecId && setCounts[currentSpecId] ? (setCounts[currentSpecId][setKey] || 0) : 0;
+                            const has2P = mySetCount >= 2;
+                            const has4P = mySetCount >= 4;
+                            const setData = currentSpecData ? currentSpecData.sets[setKey] : null;
 
                             return `
                                 <div class="flex flex-col gap-2.5 flex-grow">
@@ -920,6 +1001,15 @@ window.renderPlanner = function() {
                                             <span class="font-bold text-gray-400 text-[9px] uppercase tracking-wider">${t('ui_spec_label')}</span>
                                             <img src="${currentSpecData.image}" class="w-5 h-5 rounded" alt="">
                                             <span class="font-extrabold text-gameOrange text-[10px]">${currentLang === 'es' ? currentSpecData.name.es : currentSpecData.name.en}</span>
+                                        </div>
+
+                                        <!-- Selector de Set Type -->
+                                        <div class="p-1.5 px-3 rounded-xl border border-gray-800 bg-gray-900/30 flex items-center gap-2 text-xs">
+                                            <span class="font-bold text-gray-400 text-[9px] uppercase tracking-wider shrink-0">${t('ui_set_type')}</span>
+                                            <div class="flex items-center gap-1.5 flex-1 justify-end">
+                                                <button onclick="event.stopPropagation(); toggleSpecSet('${gear.id}', 1)" class="flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full font-bold transition-all ${state.specSet === 1 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/60 shadow-[0_0_8px_rgba(16,185,129,0.25)]' : 'bg-gray-800/40 text-gray-500 border border-gray-700/40 hover:bg-gray-700/50 hover:text-gray-300'}"><img src="source/Sets/Void Corruption.png" class="w-3 h-3 rounded-sm object-contain">${t('ui_set_vc')}</button>
+                                                <button onclick="event.stopPropagation(); toggleSpecSet('${gear.id}', 2)" class="flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full font-bold transition-all ${state.specSet === 2 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/60 shadow-[0_0_8px_rgba(16,185,129,0.25)]' : 'bg-gray-800/40 text-gray-500 border border-gray-700/40 hover:bg-gray-700/50 hover:text-gray-300'}"><img src="source/Sets/Phantom.png" class="w-3 h-3 rounded-sm object-contain">${t('ui_set_phantom')}</button>
+                                            </div>
                                         </div>
 
                                         <!-- Stats de Spec -->
@@ -933,7 +1023,7 @@ window.renderPlanner = function() {
                                         <div class="p-2 px-3 rounded-xl border border-gray-800 bg-gray-950/40 space-y-2 text-[11px]">
                                             <div class="flex justify-between items-center border-b border-gray-900/60 pb-1">
                                                 <span class="font-bold text-gray-300 uppercase text-[9px] tracking-wider">${t('ui_set_pieces')}</span>
-                                                <span class="font-extrabold text-[10px] text-gameOrange bg-gameOrange/10 border border-gameOrange/20 px-2 py-0.5 rounded-full">${count} / 4</span>
+                                                <span class="font-extrabold text-[10px] text-gameOrange bg-gameOrange/10 border border-gameOrange/20 px-2 py-0.5 rounded-full">${mySetCount} / 4</span>
                                             </div>
 
                                             <!-- 2 Piece Effect -->
@@ -942,7 +1032,7 @@ window.renderPlanner = function() {
                                                     <span class="w-1.5 h-1.5 rounded-full ${has2P ? 'bg-emerald-500 animate-pulse' : 'bg-gray-700'}"></span>
                                                     2-Piece Set ${has2P ? `(<span class="text-[8px] font-extrabold uppercase text-emerald-400">${t('ui_active')}</span>)` : ''}
                                                 </div>
-                                                <p class="text-[9px] leading-relaxed pl-2.5">${currentLang === 'es' ? currentSpecData.effects.es.piece2 : currentSpecData.effects.en.piece2}</p>
+                                                <p class="text-[9px] leading-relaxed pl-2.5">${currentLang === 'es' ? setData.effects.es.piece2 : setData.effects.en.piece2}</p>
                                             </div>
 
                                             <!-- 4 Piece Effect -->
@@ -951,7 +1041,7 @@ window.renderPlanner = function() {
                                                     <span class="w-1.5 h-1.5 rounded-full ${has4P ? 'bg-emerald-500 animate-pulse' : 'bg-gray-700'}"></span>
                                                     4-Piece Set ${has4P ? `(<span class="text-[8px] font-extrabold uppercase text-emerald-400">${t('ui_active')}</span>)` : ''}
                                                 </div>
-                                                <p class="text-[9px] leading-relaxed pl-2.5">${currentLang === 'es' ? currentSpecData.effects.es.piece4 : currentSpecData.effects.en.piece4}</p>
+                                                <p class="text-[9px] leading-relaxed pl-2.5">${currentLang === 'es' ? setData.effects.es.piece4 : setData.effects.en.piece4}</p>
                                             </div>
                                         </div>
                                         ` : ''}
